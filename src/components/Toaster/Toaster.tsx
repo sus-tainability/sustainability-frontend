@@ -18,7 +18,6 @@ export default function Toaster() {
 
   let clearNotification: NodeJS.Timeout | undefined;
   useEffect(() => {
-    console.log("here");
     if (prevToasterMessage !== toasterState.message && prevToasterShown) {
       clearTimeout(clearNotification);
     }

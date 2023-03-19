@@ -31,7 +31,7 @@ export default class ApiService {
         ...requestConfig,
         baseURL: altUrl.length !== 0 ? altUrl : baseUrl,
         headers: {
-          "x-auth-token": accessToken,
+          Authorization: accessToken ? `Bearer ${accessToken}` : null,
           "Content-Type": contentType,
           ...requestConfig.headers,
         },
