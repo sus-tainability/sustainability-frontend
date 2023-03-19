@@ -16,7 +16,10 @@ const Home: React.FC = () => {
             <IonTitle size="large">Blank</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+        {/* <ExploreContainer /> */}
+        <div className="flex justify-center items-center">
+          <p className="font-bold">Styled with tailwind</p>
+        </div>
       </IonContent>
     </IonPage>
   );
