@@ -1,0 +1,7 @@
+{
+  "name": "sus-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
