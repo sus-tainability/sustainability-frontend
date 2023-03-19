@@ -4,7 +4,7 @@ import { useApi } from "@/api/ApiHandler";
 import AuthService from "@/api/Authentication/AuthService";
 import UserService from "@/api/User/UserService";
 // import Logo from "@/assets/icon.png";
-// import SingleSignOn from "@components/Landing/Forms/SingleSignOn";
+import SingleSignOn from "@/components/Authentication/SingleSignOn";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/utils/atoms/user";
 
@@ -102,7 +102,7 @@ const Login = () => {
             </div>
           </form>
 
-          {/* <SingleSignOn /> */}
+          <SingleSignOn />
 
           <div className="mt-6">
             <div className="relative">

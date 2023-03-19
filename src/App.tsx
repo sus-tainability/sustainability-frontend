@@ -1,6 +1,7 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
 import { RecoilRoot } from "recoil";
 import BaseRouter from "./components/Routers/BaseRouter";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -26,12 +27,18 @@ import "./theme/tailwind.css";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <RecoilRoot>
-      <BaseRouter />
-    </RecoilRoot>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
+
+  return (
+    <IonApp>
+      <GoogleOAuthProvider clientId={client_id}>
+        <RecoilRoot>
+          <BaseRouter />
+        </RecoilRoot>
+      </GoogleOAuthProvider>
+    </IonApp>
+  );
+};
 
 export default App;
