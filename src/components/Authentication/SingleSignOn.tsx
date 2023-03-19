@@ -16,7 +16,7 @@ const SingleSignOn = () => {
   const [_, setToaster] = useRecoilState(toasterAtom);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [__, setUser] = useRecoilState(userAtom);
-  // const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
 
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
@@ -42,13 +42,13 @@ const SingleSignOn = () => {
         title: "Success",
         type: ToasterType.SUCCESS,
       });
-      // const res = await getSelf();
-      // if (res && res.data) {
-      //   setUser((prev) => ({ ...prev, ...res.data }));
-      // }
-      // window.setTimeout(() => {
-      //   window.location.reload();
-      // }, 1500);
+      const res = await getSelf();
+      if (res && res.data) {
+        setUser((prev) => ({ ...prev, ...res.data }));
+      }
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     },
   });
 

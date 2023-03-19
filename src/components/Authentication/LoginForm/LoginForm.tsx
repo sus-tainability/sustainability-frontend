@@ -15,7 +15,7 @@ const LoginForm = () => {
     true,
     true
   );
-  // const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUser] = useRecoilState(userAtom);
   const [email, setEmail] = useState("");
@@ -23,15 +23,15 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     const loginRes = await login();
-    // const self = await getSelf();
-    // if (loginRes && loginRes.data) {
-    //   if (self && self.data) {
-    //     setUser((prev) => ({ ...prev, ...self.data }));
-    //     window.setTimeout(() => {
-    //       window.location.reload();
-    //     }, 1500);
-    //   }
-    // }
+    const self = await getSelf();
+    if (loginRes && loginRes.data) {
+      if (self && self.data) {
+        setUser((prev) => ({ ...prev, ...self.data }));
+        window.setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    }
   };
 
   return (

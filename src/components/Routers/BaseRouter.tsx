@@ -27,13 +27,13 @@ const BaseRouter = () => {
     (token && !isTokenExpired(token)) || false
   );
   const [isOnboarded, setIsOnboarded] = useState<boolean>(false);
-  //   const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
 
   const getUser = async () => {
-    // const res = await getSelf();
-    // if (res && res.data) {
-    //   setUser((prev) => ({ ...prev, ...res.data }));
-    // }
+    const res = await getSelf();
+    if (res && res.data) {
+      setUser((prev) => ({ ...prev, ...res.data }));
+    }
   };
 
   useEffect(() => {
@@ -51,8 +51,7 @@ const BaseRouter = () => {
     <IonReactRouter>
       <IonRouterOutlet>
         <Switch>
-          <Route exact path={routes.home} component={Home} />
-
+          {isLoggedIn && <Route exact path={routes.home} component={Home} />}
           {/* You should only see login signup pages if you are not logged in */}
           {!isLoggedIn && (
             <Route exact path={routes.authentication.login} component={Login} />

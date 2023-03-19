@@ -3,7 +3,6 @@ import { routes } from "@/constants/routes";
 import { useApi } from "@/api/ApiHandler";
 import AuthService from "@/api/Authentication/AuthService";
 import UserService from "@/api/User/UserService";
-// import Logo from "@/assets/icon.png";
 import SingleSignOn from "@/components/Authentication/SingleSignOn";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/utils/atoms/user";
@@ -15,7 +14,7 @@ const Login = () => {
     true,
     true
   );
-  //   const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUser] = useRecoilState(userAtom);
   const [email, setEmail] = useState("");
@@ -23,15 +22,15 @@ const Login = () => {
 
   const handleSubmit = async () => {
     const loginRes = await login();
-    // const self = await getSelf();
-    // if (loginRes && loginRes.data) {
-    //   if (self && self.data) {
-    //     setUser(prev => ({ ...prev, ...self.data }));
-    //     window.setTimeout(() => {
-    //       window.location.reload();
-    //     }, 1500);
-    //   }
-    // }
+    const self = await getSelf();
+    if (loginRes && loginRes.data) {
+      if (self && self.data) {
+        setUser((prev) => ({ ...prev, ...self.data }));
+        window.setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    }
   };
 
   return (

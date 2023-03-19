@@ -17,20 +17,20 @@ const SignUpForm = () => {
     true,
     true
   );
-  // const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUser] = useRecoilState(userAtom);
 
   const handleSubmit = async () => {
     const res = await signUp({ email, password, passwordConfirmation });
     if (res && res.data) {
-      // const self = await getSelf();
-      // if (self && self.data) {
-      //   setUser(prev => ({ ...prev, ...self.data }));
-      //   window.setTimeout(() => {
-      //     window.location.reload();
-      //   }, 1500);
-      // }
+      const self = await getSelf();
+      if (self && self.data) {
+        setUser((prev) => ({ ...prev, ...self.data }));
+        window.setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
     }
   };
 
