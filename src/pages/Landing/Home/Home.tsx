@@ -1,6 +1,11 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import ExploreContainer from "@/components/ExploreContainer";
 
 const Home: React.FC = () => {
   return (
@@ -16,7 +21,7 @@ const Home: React.FC = () => {
             <IonTitle size="large">Blank</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {/* <ExploreContainer /> */}
+        <ExploreContainer />
         <div className="flex justify-center items-center">
           <p className="font-bold">Styled with tailwind</p>
         </div>
