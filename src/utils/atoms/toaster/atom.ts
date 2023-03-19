@@ -1,9 +1,9 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const enum ToasterType {
-  SUCCESS = 'success',
-  ERROR = 'error',
-  INFO = 'info',
+  SUCCESS = "success",
+  ERROR = "error",
+  INFO = "info",
 }
 
 interface ToasterState {
@@ -14,11 +14,11 @@ interface ToasterState {
 }
 
 export const toasterAtom = atom<ToasterState>({
-  key: 'toasterAtom',
+  key: "toasterAtom",
   default: {
     isShown: false,
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     type: ToasterType.SUCCESS,
   },
 });

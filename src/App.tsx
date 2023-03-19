@@ -24,6 +24,7 @@ import "./theme/variables.css";
 
 /* Tailwind styles */
 import "./theme/tailwind.css";
+import Toaster from "./components/Toaster";
 
 setupIonicReact();
 
@@ -35,6 +36,7 @@ const App: React.FC = () => {
       <GoogleOAuthProvider clientId={client_id}>
         <RecoilRoot>
           <BaseRouter />
+          <Toaster />
         </RecoilRoot>
       </GoogleOAuthProvider>
     </IonApp>
