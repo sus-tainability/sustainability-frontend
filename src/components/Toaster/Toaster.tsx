@@ -22,6 +22,7 @@ export default function Toaster() {
       clearTimeout(clearNotification);
     }
     if (toasterState.isShown && !prevToasterShown) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       clearNotification = setTimeout(() => {
         setToasterState((prev) => ({ ...prev, isShown: false }));
       }, 4000);
