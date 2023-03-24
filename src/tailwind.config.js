@@ -11,6 +11,20 @@ const TailWindTheme = {
       colors: {
         lightShade: "#F5F8F8",
       },
+      animation: {
+        fadeIn: "fadeIn 3.5s ease-in",
+        grow: "grow 1s ease-in-out",
+      },
+      keyframes: {
+        grow: {
+          "0%": { transform: "scaleY(0)" },
+          "100%": { transform: "scaleY(1)" },
+        },
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
     },
   },
   plugins: [

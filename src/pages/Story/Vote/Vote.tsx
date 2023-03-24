@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useState } from "react";
 import { IonPage, IonContent } from "@ionic/react";
 
 import InformationFooter from "@/components/InformationFooter";
@@ -10,6 +10,7 @@ import boxImg from "@/assets/boxImg.png";
 import paperImg from "@/assets/paperImg.png";
 
 const Vote = () => {
+  const [hasVoted, setHasVoted] = useState(false);
   return (
     <IonPage>
       <IonContent fullscreen={true}>
@@ -26,18 +27,56 @@ const Vote = () => {
                 still lead to massive population losses for red pandas
               </p>
               <div className="flex w-full mt-8 justify-center items-center gap-10">
-                <AppButton className="p-5">
-                  <>
-                    <img src={boxImg} />
-                    Box
-                  </>
+                <AppButton
+                  onClick={() => setHasVoted(true)}
+                  className="h-28 w-28"
+                >
+                  <div className="relative flex flex-col justify-center items-center h-full">
+                    <div>
+                      <img src={boxImg} />
+                      <p className="mt-2">Box</p>
+                    </div>
+                    {hasVoted && (
+                      <>
+                        <div className="absolute bottom-0 w-full h-full bg-[#00000093] rounded" />
+                        <div
+                          style={{ height: `${100 - 40}%` }}
+                          className={`absolute py-2 bottom-0 flex items-center justify-center
+                              w-full greenGradient rounded origin-bottom animate-grow`}
+                        >
+                          <p className="font-bold font-header text-4xl animate-fadeIn">
+                            60%
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </AppButton>
                 <p className="font-body text-lightShade">or</p>
-                <AppButton className="p-5">
-                  <>
-                    <img src={paperImg} />
-                    Paper
-                  </>
+                <AppButton
+                  onClick={() => setHasVoted(true)}
+                  className="h-28 w-28"
+                >
+                  <div className="relative flex flex-col justify-center items-center h-full">
+                    <div>
+                      <img src={paperImg} />
+                      <p className="mt-2">Paper</p>
+                    </div>
+                    {hasVoted && (
+                      <>
+                        <div className="absolute bottom-0 w-full h-full bg-[#00000093] rounded" />
+                        <div
+                          style={{ height: `${100 - 60}%` }}
+                          className={`absolute py-2 bottom-0 flex items-center justify-center
+                              w-full greenGradient rounded origin-bottom animate-grow`}
+                        >
+                          <p className="font-bold font-header text-4xl animate-fadeIn">
+                            40%
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </AppButton>
               </div>
             </div>
