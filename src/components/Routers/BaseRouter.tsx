@@ -11,6 +11,7 @@ import UserService from "@/api/User/UserService";
 
 import Home from "@pages/Landing/Home";
 import Login from "@pages/Landing/Login";
+import Vote from "@pages/Story/Vote";
 import { IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
@@ -54,10 +55,14 @@ const BaseRouter = () => {
       <IonRouterOutlet>
         <Switch>
           {isLoggedIn && <Route exact path={routes.home} component={Home} />}
+          {isLoggedIn && (
+            <Route exact path={routes.story.vote} component={Vote} />
+          )}
           {/* You should only see login signup pages if you are not logged in */}
           {!isLoggedIn && (
             <Route exact path={routes.authentication.login} component={Login} />
           )}
+
           <Route path="*">
             <Redirect to={defaultRoute()} />
           </Route>

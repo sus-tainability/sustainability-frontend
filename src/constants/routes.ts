@@ -2,6 +2,8 @@ export const routes = {
   home: "/",
   authentication: {
     login: "/login",
-    signup: "/signup",
+  },
+  story: {
+    vote: "/story/vote",
   },
 };

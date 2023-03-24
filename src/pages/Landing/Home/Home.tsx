@@ -3,8 +3,11 @@ import { IonContent, IonPage } from "@ionic/react";
 import homeImg from "@/assets/homeImg.png";
 import AppButton from "@/components/AppButton";
 import InformationFooter from "@/components/InformationFooter";
+import { useHistory } from "react-router";
+import { routes } from "@/constants/routes";
 
 const Home: React.FC = () => {
+  const history = useHistory();
   return (
     <IonPage>
       <IonContent fullscreen={true}>
@@ -20,7 +23,14 @@ const Home: React.FC = () => {
                 protect the endangered species, and promote a sustainable
                 future.
               </p>
-              <AppButton className="py-4 px-10 mt-8">Join Now</AppButton>
+              <AppButton
+                onClick={() => {
+                  history.push(routes.story.vote);
+                }}
+                className="py-4 px-10 mt-8"
+              >
+                Join Now
+              </AppButton>
             </div>
           </InformationFooter>
         </div>
