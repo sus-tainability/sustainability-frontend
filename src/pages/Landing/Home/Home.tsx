@@ -10,7 +10,7 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent fullscreen={true}>
+      <IonContent>
         <div className="relative h-screen bg-gradient-to-b from-[#582302] to-[#964C1E]">
           <img className="w-full" src={homeImg} />
           <InformationFooter>

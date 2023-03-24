@@ -13,7 +13,7 @@ const Vote = () => {
   const [hasVoted, setHasVoted] = useState(false);
   return (
     <IonPage>
-      <IonContent fullscreen={true}>
+      <IonContent>
         <div className="relative h-screen bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
           <img src={voteImg} />
           <InformationFooter heightOffSet={400}>
