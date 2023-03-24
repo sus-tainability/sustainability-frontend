@@ -3,7 +3,15 @@ const TailWindTheme = {
   darkMode: false, // or 'media' or 'class'
   important: true,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        header: ["Cabin", "sans-serif"],
+        body: ["Titillium Web", "sans-serif"],
+      },
+      colors: {
+        lightShade: "#F5F8F8",
+      },
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),
