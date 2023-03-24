@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import homeImg from "@/assets/homeImg.png";
 import AppButton from "@/components/AppButton";
 import InformationFooter from "@/components/InformationFooter";
-import { useHistory } from "react-router";
 import { routes } from "@/constants/routes";
 
 const Home: React.FC = () => {
-  const history = useHistory();
+  const router = useIonRouter();
+
   return (
     <IonPage>
       <IonContent fullscreen={true}>
@@ -25,7 +25,7 @@ const Home: React.FC = () => {
               </p>
               <AppButton
                 onClick={() => {
-                  history.push(routes.story.vote);
+                  router.push(routes.story.vote, "forward", "push");
                 }}
                 className="py-4 px-10 mt-8"
               >

@@ -52,12 +52,15 @@ const BaseRouter = () => {
 
   return (
     <IonReactRouter>
-      <IonRouterOutlet>
+      <IonRouterOutlet animated={true} mode="ios">
         <Switch>
-          {isLoggedIn && <Route exact path={routes.home} component={Home} />}
           {isLoggedIn && (
-            <Route exact path={routes.story.vote} component={Vote} />
+            <>
+              <Route exact path={routes.home} component={Home} />
+              <Route exact path={routes.story.vote} component={Vote} />
+            </>
           )}
+
           {/* You should only see login signup pages if you are not logged in */}
           {!isLoggedIn && (
             <Route exact path={routes.authentication.login} component={Login} />
