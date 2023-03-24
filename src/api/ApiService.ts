@@ -35,8 +35,6 @@ export default class ApiService {
           "Content-Type": contentType,
           ...requestConfig.headers,
         },
-        maxContentLength: 10000000,
-        maxBodyLength: 10000000,
       };
       const response: ApiResponse = await axios(config);
       return response.data;

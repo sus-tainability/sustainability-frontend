@@ -5,12 +5,12 @@ import ApiService from "@/api/ApiService";
 import { getLocalStorageValue } from "@/utils/miscellaneous";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/utils/atoms/user";
+import useAsync from "@/hooks/useAsync";
 import { useApi } from "@/api/ApiHandler";
 import UserService from "@/api/User/UserService";
 
 import Home from "@pages/Landing/Home";
 import Login from "@pages/Landing/Login";
-import Register from "@pages/Landing/SignUp";
 import { IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
@@ -20,25 +20,27 @@ function isTokenExpired(token: string) {
 }
 
 const BaseRouter = () => {
-  const [user, setUser] = useRecoilState(userAtom);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setUser] = useRecoilState(userAtom);
   const token = getLocalStorageValue(ApiService.authTokenKey);
 
   const [isLoggedIn] = useState<boolean>(
     (token && !isTokenExpired(token)) || false
   );
-  const [isOnboarded, setIsOnboarded] = useState<boolean>(false);
-  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
 
-  const getUser = async () => {
-    const res = await getSelf();
-    if (res && res.data) {
-      setUser((prev) => ({ ...prev, ...res.data }));
-    }
-  };
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+  const { execute, status, value } = useAsync(getSelf, false);
 
   useEffect(() => {
-    getUser();
+    execute();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (status === "success" && value && value.data) {
+      setUser((prev) => ({ ...prev, ...value.data }));
+    }
+  }, [setUser, status, value]);
 
   const defaultRoute = () => {
     if (!isLoggedIn) {
@@ -56,14 +58,6 @@ const BaseRouter = () => {
           {!isLoggedIn && (
             <Route exact path={routes.authentication.login} component={Login} />
           )}
-          {!isLoggedIn && (
-            <Route
-              exact
-              path={routes.authentication.signup}
-              component={Register}
-            />
-          )}
-
           <Route path="*">
             <Redirect to={defaultRoute()} />
           </Route>
