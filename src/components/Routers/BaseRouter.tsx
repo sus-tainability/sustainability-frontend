@@ -76,7 +76,7 @@ const BaseRouter = () => {
               <Route exact path={routes.story.vote} component={Vote} />
               <Redirect to={defaultRoute()} />
             </IonRouterOutlet>
-            <IonTabBar mode="ios" className="py-2" slot="bottom">
+            <IonTabBar mode="ios" className="pt-2 pb-5" slot="bottom">
               <IonTabButton tab="tab1" href={routes.home}>
                 <IonIcon aria-hidden="true" icon={gameControllerOutline} />
                 <IonLabel>Challenges</IonLabel>
