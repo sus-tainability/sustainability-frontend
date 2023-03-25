@@ -16,7 +16,10 @@ import boxImg from "@/assets/boxImg.png";
 import paperImg from "@/assets/paperImg.png";
 
 const Vote = () => {
-  const [hasVoted, setHasVoted] = useState(false);
+  const [isOptionOne, setIsOptionOne] = useState(false);
+  const [isOptionTwo, setIsOptionTwo] = useState(false);
+  const hasVoted = isOptionOne || isOptionTwo;
+
   return (
     <IonPage>
       <IonHeader>
@@ -32,14 +35,25 @@ const Vote = () => {
               <p className="text-lightShade text-4xl font-header font-bold">
                 Less Paper, <br /> More Trees
               </p>
-              <p className="mt-8 text-lightShade font-body">
+              <div className="mt-3 flex gap-3 items-center text-lightShade font-body">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-20"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
+                <p className="font-bold">Time Until Challenge:</p>
+                <p className="mt-0.5">00:00:00</p>
+              </div>
+              <p className="mt-3 text-lightShade font-body">
                 Deforestation is the major threat to the red pandas’ population.
                 Even when forests are only partially cut down, deforestation can
                 still lead to massive population losses for red pandas
               </p>
               <div className="flex w-full mt-8 justify-center items-center gap-10">
                 <AppButton
-                  onClick={() => setHasVoted(true)}
+                  onClick={() => {
+                    setIsOptionOne(true);
+                    setIsOptionTwo(false);
+                  }}
                   className="h-28 w-28"
                 >
                   <div className="relative flex flex-col justify-center items-center h-full">
@@ -49,7 +63,16 @@ const Vote = () => {
                     </div>
                     {hasVoted && (
                       <>
-                        <div className="absolute bottom-0 w-full h-full bg-[#00000093] rounded" />
+                        <div className="absolute bottom-0 w-full h-full bg-[#00000093] rounded">
+                          {isOptionOne && (
+                            <span className="absolute -top-1 -right-1 flex">
+                              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800">
+                                Voted!
+                              </span>
+                            </span>
+                          )}
+                        </div>
+
                         <div
                           style={{ height: `${100 - 40}%` }}
                           className={`absolute py-2 bottom-0 flex items-center justify-center
@@ -65,7 +88,10 @@ const Vote = () => {
                 </AppButton>
                 <p className="font-body text-lightShade">or</p>
                 <AppButton
-                  onClick={() => setHasVoted(true)}
+                  onClick={() => {
+                    setIsOptionOne(false);
+                    setIsOptionTwo(true);
+                  }}
                   className="h-28 w-28"
                 >
                   <div className="relative flex flex-col justify-center items-center h-full">
@@ -75,7 +101,16 @@ const Vote = () => {
                     </div>
                     {hasVoted && (
                       <>
-                        <div className="absolute bottom-0 w-full h-full bg-[#00000093] rounded" />
+                        <div className="absolute bottom-0 w-full h-full bg-[#00000093] rounded">
+                          {isOptionTwo && (
+                            <span className="absolute -top-1 -right-1 flex">
+                              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800">
+                                Voted!
+                              </span>
+                            </span>
+                          )}
+                        </div>
+
                         <div
                           style={{ height: `${100 - 60}%` }}
                           className={`absolute py-2 bottom-0 flex items-center justify-center
