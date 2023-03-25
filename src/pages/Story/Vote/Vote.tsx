@@ -1,6 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
-import { IonPage, IonContent } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+} from "@ionic/react";
 
 import InformationFooter from "@/components/InformationFooter";
 import AppButton from "@/components/AppButton";
@@ -13,6 +19,11 @@ const Vote = () => {
   const [hasVoted, setHasVoted] = useState(false);
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar mode="ios">
+          <IonTitle className="font-body">Pick Your Path</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         <div className="h-full bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
           <img src={voteImg} />

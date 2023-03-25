@@ -1,5 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { IonContent, IonPage, useIonRouter } from "@ionic/react";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  useIonRouter,
+} from "@ionic/react";
 import homeImg from "@/assets/homeImg.png";
 import AppButton from "@/components/AppButton";
 import InformationFooter from "@/components/InformationFooter";
@@ -10,6 +17,11 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar mode="ios">
+          <IonTitle className="font-body">Welcome</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         <div className="h-full bg-gradient-to-b from-[#582302] to-[#964C1E]">
           <img className="w-full" src={homeImg} />
