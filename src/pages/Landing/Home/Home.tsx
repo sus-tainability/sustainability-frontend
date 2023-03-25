@@ -40,7 +40,7 @@ const Home: React.FC = () => {
               <AppButton
                 onClick={() => {
                   setHasJoined(true);
-                  router.push(routes.story.vote, "forward", "push");
+                  router.push(routes.story.vote, "forward", "replace");
                 }}
                 className="py-4 px-10 mt-8"
               >
