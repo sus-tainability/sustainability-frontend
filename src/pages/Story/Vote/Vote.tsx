@@ -20,13 +20,13 @@ const Vote = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar mode="ios">
+        <IonToolbar className="bg-white" mode="ios">
           <IonTitle className="font-body">Pick Your Path</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <div className="h-full bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
-          <img src={voteImg} />
+          <img className="w-full" src={voteImg} />
           <InformationFooter heightOffSet={400}>
             <div className="p-8">
               <p className="text-lightShade text-4xl font-header font-bold">
