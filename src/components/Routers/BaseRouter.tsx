@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { routes } from "@/constants/routes";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import ApiService from "@/api/ApiService";
 import { getLocalStorageValue } from "@/utils/miscellaneous";
 import { useRecoilState } from "recoil";
@@ -8,11 +8,20 @@ import { userAtom } from "@/utils/atoms/user";
 import useAsync from "@/hooks/useAsync";
 import { useApi } from "@/api/ApiHandler";
 import UserService from "@/api/User/UserService";
+import { personCircleOutline, gameControllerOutline } from "ionicons/icons";
 
 import Home from "@pages/Landing/Home";
 import Login from "@pages/Landing/Login";
 import Vote from "@pages/Story/Vote";
-import { IonRouterOutlet } from "@ionic/react";
+import {
+  IonApp,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
 function isTokenExpired(token: string) {
@@ -51,24 +60,36 @@ const BaseRouter = () => {
   };
 
   return (
-    <IonReactRouter>
-      <IonRouterOutlet animated={true} mode="ios">
-        <Switch>
-          {isLoggedIn && <Route exact path={routes.home} component={Home} />}
-          {isLoggedIn && (
-            <Route exact path={routes.story.vote} component={Vote} />
-          )}
-
-          {/* You should only see login signup pages if you are not logged in */}
-          {!isLoggedIn && (
+    <IonApp>
+      <IonReactRouter>
+        {!isLoggedIn && (
+          <IonRouterOutlet>
             <Route exact path={routes.authentication.login} component={Login} />
-          )}
-          <Route path="*">
             <Redirect to={defaultRoute()} />
-          </Route>
-        </Switch>
-      </IonRouterOutlet>
-    </IonReactRouter>
+          </IonRouterOutlet>
+        )}
+
+        {isLoggedIn && (
+          <IonTabs>
+            <IonRouterOutlet animated={true} mode="ios">
+              <Route exact path={routes.home} component={Home} />
+              <Route exact path={routes.story.vote} component={Vote} />
+              <Redirect to={defaultRoute()} />
+            </IonRouterOutlet>
+            <IonTabBar mode="ios" className="py-2" slot="bottom">
+              <IonTabButton tab="tab1" href={routes.home}>
+                <IonIcon aria-hidden="true" icon={gameControllerOutline} />
+                <IonLabel>Challenges</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab2" href="/tab2">
+                <IonIcon aria-hidden="true" icon={personCircleOutline} />
+                <IonLabel>Profile</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        )}
+      </IonReactRouter>
+    </IonApp>
   );
 };
 

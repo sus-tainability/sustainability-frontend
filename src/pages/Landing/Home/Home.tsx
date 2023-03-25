@@ -11,9 +11,11 @@ import homeImg from "@/assets/homeImg.png";
 import AppButton from "@/components/AppButton";
 import InformationFooter from "@/components/InformationFooter";
 import { routes } from "@/constants/routes";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Home: React.FC = () => {
   const router = useIonRouter();
+  const [hasJoined, setHasJoined] = useLocalStorage("hasJoined", false);
 
   return (
     <IonPage>
@@ -37,11 +39,13 @@ const Home: React.FC = () => {
               </p>
               <AppButton
                 onClick={() => {
+                  setHasJoined(true);
                   router.push(routes.story.vote, "forward", "push");
                 }}
                 className="py-4 px-10 mt-8"
               >
-                Join Now
+                {hasJoined && "Resume Journey"}
+                {!hasJoined && "Join Now"}
               </AppButton>
             </div>
           </InformationFooter>

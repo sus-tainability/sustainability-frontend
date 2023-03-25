@@ -1,4 +1,4 @@
-import { IonApp, setupIonicReact } from "@ionic/react";
+import { setupIonicReact } from "@ionic/react";
 import { RecoilRoot } from "recoil";
 import BaseRouter from "./components/Routers/BaseRouter";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -32,14 +32,12 @@ const App: React.FC = () => {
   const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
   return (
-    <IonApp>
-      <GoogleOAuthProvider clientId={client_id}>
-        <RecoilRoot>
-          <BaseRouter />
-          <Toaster />
-        </RecoilRoot>
-      </GoogleOAuthProvider>
-    </IonApp>
+    <GoogleOAuthProvider clientId={client_id}>
+      <RecoilRoot>
+        <BaseRouter />
+        <Toaster />
+      </RecoilRoot>
+    </GoogleOAuthProvider>
   );
 };
 
