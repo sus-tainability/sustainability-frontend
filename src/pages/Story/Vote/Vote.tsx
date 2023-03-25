@@ -14,7 +14,7 @@ const Vote = () => {
   return (
     <IonPage>
       <IonContent>
-        <div className="relative h-screen bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
+        <div className="h-full bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
           <img src={voteImg} />
           <InformationFooter heightOffSet={400}>
             <div className="p-8">

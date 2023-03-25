@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-        <div className="relative h-screen bg-gradient-to-b from-[#582302] to-[#964C1E]">
+        <div className="h-full bg-gradient-to-b from-[#582302] to-[#964C1E]">
           <img className="w-full" src={homeImg} />
           <InformationFooter>
             <div className="p-8">
