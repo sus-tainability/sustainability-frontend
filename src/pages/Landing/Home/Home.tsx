@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar className="bg-white" mode="ios">
+        <IonToolbar mode="ios">
           <IonTitle className="font-body">Welcome</IonTitle>
         </IonToolbar>
       </IonHeader>

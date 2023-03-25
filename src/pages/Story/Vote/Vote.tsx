@@ -20,7 +20,7 @@ const Vote = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar className="bg-white" mode="ios">
+        <IonToolbar mode="ios">
           <IonTitle className="font-body">Pick Your Path</IonTitle>
         </IonToolbar>
       </IonHeader>
