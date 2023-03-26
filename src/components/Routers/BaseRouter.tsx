@@ -13,6 +13,7 @@ import { personCircleOutline, gameControllerOutline } from "ionicons/icons";
 import Home from "@pages/Landing/Home";
 import Login from "@pages/Landing/Login";
 import Vote from "@pages/Story/Vote";
+import Profile from "@pages/Profile/Profile";
 import {
   IonApp,
   IonIcon,
@@ -62,18 +63,19 @@ const BaseRouter = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        {!isLoggedIn && (
-          <IonRouterOutlet>
-            <Route exact path={routes.authentication.login} component={Login} />
-            <Redirect to={defaultRoute()} />
-          </IonRouterOutlet>
-        )}
+          {/* {!isLoggedIn && (
+            <IonRouterOutlet>
+              <Route exact path={routes.authentication.login} component={Login} />
+              <Redirect to={defaultRoute()} />
+            </IonRouterOutlet>
+          )} */}
 
-        {isLoggedIn && (
+        {(
           <IonTabs>
             <IonRouterOutlet animated={true} mode="ios">
               <Route exact path={routes.home} component={Home} />
               <Route exact path={routes.story.vote} component={Vote} />
+              <Route exact path={routes.profile.base} component={Profile} />
               <Redirect to={defaultRoute()} />
             </IonRouterOutlet>
             <IonTabBar mode="ios" className="pt-2 pb-5" slot="bottom">

@@ -6,4 +6,7 @@ export const routes = {
   story: {
     vote: "/story/vote",
   },
+  profile: {
+    base: "/profile"
+  }
 };
