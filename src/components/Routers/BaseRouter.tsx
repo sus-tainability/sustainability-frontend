@@ -24,6 +24,7 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import Game from "@/pages/Game";
 
 function isTokenExpired(token: string) {
   const expiry = JSON.parse(atob(token.split(".")[1])).exp;
@@ -76,6 +77,7 @@ const BaseRouter = () => {
               <Route exact path={routes.home} component={Home} />
               <Route exact path={routes.story.vote} component={Vote} />
               <Route exact path={routes.profile.base} component={Profile} />
+              <Route exact path={routes.game.base} component={Game} />
               <Redirect to={defaultRoute()} />
             </IonRouterOutlet>
             <IonTabBar mode="ios" className="pt-2 pb-5" slot="bottom">
