@@ -7,6 +7,8 @@ import ApiService, { ApiData } from "@/api/ApiService";
 export type UserData = {
   id: number;
   email: string;
+  totalCarbonSaved: number;
+  totalPoints: number;
 };
 
 export interface UserSignUpData {

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { IonContent, IonPage, IonText } from "@ionic/react";
 import ProfileCard from "@/components/ProfileCard";
 import ProfileBadge from "@/components/ProfileBadge";
@@ -6,7 +7,27 @@ import profileBgImg from "@/assets/profile_bg.png";
 import { ReactComponent as TreeIcon } from "@/assets/profile/tree.svg"
 import { ReactComponent as BackIcon } from "@/assets/profile/backButton.svg"
 
+import { useApi } from "@/api/ApiHandler";
+import UserService from "@/api/User/UserService";
+
+import { useRecoilState } from "recoil";
+import { userAtom } from "@/utils/atoms/user/atom";
+
 const Profile: React.FC = () => {
+  const [user, setUser] = useRecoilState(userAtom);
+
+  const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
+
+  useEffect(() => {
+    const updateUserData = async () => {
+      const res = await getSelf();
+      if (res && res.data) {
+        setUser((prev) => ({ ...prev, ...res.data }));
+      }
+    };
+    updateUserData();
+  }, [])
+
   return (
     <IonPage>
       <IonContent>
@@ -22,19 +43,19 @@ const Profile: React.FC = () => {
             <IonText className="text-white text-[36px]">My Profile</IonText>
 
             <div className="flex flex-col gap-2">
-              <IonText className="text-white text-[21px]">Jeffrey Cui Shenyi</IonText>
+              <IonText className="text-white text-[21px]">{user.email}</IonText>
               <div className="w-[30%] border-1 border-b-2 border-white" />
             </div>
             <div className="flex flex-col gap-6">
               <ProfileCard title="Your Eco-Credits">
                 <div className="flex items-end gap-2">
-                  <IonText className="text-[27px] leading-[32px] font-bold">3,000</IonText>
+                  <IonText className="text-[27px] leading-[32px] font-bold">{user.totalPoints}</IonText>
                   <IonText className="text-[16px] leading-[24px]">credits</IonText>
                 </div>
               </ProfileCard>
               <ProfileCard title="Your Impact since...">
                 <div className="flex items-end gap-2">
-                  <IonText className="text-[27px] leading-[32px] font-bold">26,911</IonText>
+                  <IonText className="text-[27px] leading-[32px] font-bold">{user.totalCarbonSaved}</IonText>
                   <IonText className="text-[16px] leading-[24px]">kg CO2e</IonText>
                 </div>
               </ProfileCard>

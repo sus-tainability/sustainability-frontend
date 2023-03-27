@@ -9,6 +9,8 @@ export const userAtom = atom<UserData>({
   default: {
     id: 0,
     email: "",
+    totalCarbonSaved: 0,
+    totalPoints: 0,
   },
   effects_UNSTABLE: [persistAtom],
 });
