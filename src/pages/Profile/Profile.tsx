@@ -4,8 +4,11 @@ import ProfileCard from "@/components/ProfileCard";
 import ProfileBadge from "@/components/ProfileBadge";
 
 import profileBgImg from "@/assets/profile_bg.png";
-import { ReactComponent as TreeIcon } from "@/assets/profile/tree.svg"
 import { ReactComponent as BackIcon } from "@/assets/profile/backButton.svg"
+import { ReactComponent as TreeIcon } from "@/assets/profile/tree.svg"
+import { ReactComponent as ConsumptionIcon } from "@/assets/profile/consumption.svg"
+import { ReactComponent as ExploreIcon } from "@/assets/profile/currentlyExploring.svg"
+import { ReactComponent as LifeWaterIcon } from "@/assets/profile/lifeBelowWater.svg"
 
 import { useApi } from "@/api/ApiHandler";
 import UserService from "@/api/User/UserService";
@@ -71,9 +74,9 @@ const Profile: React.FC = () => {
 
             <div className="flex flex-wrap items-center justify-between gap-y-6">
               <ProfileBadge title="Life on Land" color="#59BA47" icon={<TreeIcon />} />
-              <ProfileBadge title="Life Below Water" color="#1F97D4" icon={<TreeIcon />} />
-              <ProfileBadge title="Responsible Consumption" color="#BF8D2C" icon={<TreeIcon />} />
-              <ProfileBadge title="Curently Exploring..." color="#7C7278" icon={<TreeIcon />} />
+              <ProfileBadge title="Life Below Water" color="#1F97D4" icon={<LifeWaterIcon />} />
+              <ProfileBadge title="Responsible Consumption" color="#BF8D2C" icon={<ConsumptionIcon />} />
+              <ProfileBadge title="Curently Exploring..." color="#7C7278" icon={<ExploreIcon />} />
             </div>
           </div>
         </div>
