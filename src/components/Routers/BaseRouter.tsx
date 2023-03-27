@@ -63,14 +63,14 @@ const BaseRouter = () => {
   return (
     <IonApp>
       <IonReactRouter>
-          {/* {!isLoggedIn && (
-            <IonRouterOutlet>
-              <Route exact path={routes.authentication.login} component={Login} />
-              <Redirect to={defaultRoute()} />
-            </IonRouterOutlet>
-          )} */}
+        {!isLoggedIn && (
+          <IonRouterOutlet>
+            <Route exact path={routes.authentication.login} component={Login} />
+            <Redirect to={defaultRoute()} />
+          </IonRouterOutlet>
+        )}
 
-        {(
+        {isLoggedIn && (
           <IonTabs>
             <IonRouterOutlet animated={true} mode="ios">
               <Route exact path={routes.home} component={Home} />
