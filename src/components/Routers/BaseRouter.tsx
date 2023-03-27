@@ -85,7 +85,7 @@ const BaseRouter = () => {
                 <IonIcon aria-hidden="true" icon={gameControllerOutline} />
                 <IonLabel>Challenges</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="tab2" href="/tab2">
+              <IonTabButton tab="tab2" href={routes.profile.base}>
                 <IonIcon aria-hidden="true" icon={personCircleOutline} />
                 <IonLabel>Profile</IonLabel>
               </IonTabButton>

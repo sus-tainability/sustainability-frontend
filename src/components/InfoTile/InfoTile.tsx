@@ -4,7 +4,11 @@ const InfoTile = ({ imageUrl, link }: { imageUrl: string; link: string }) => {
   return (
     <div className="h-36 w-36 rounded-lg mr-2">
       <a href={link}>
-        <img className="h-36 w-36 rounded-lg" src={imageUrl} alt="" />
+        <img
+          className="object-cover h-36 w-36 rounded-lg"
+          src={imageUrl}
+          alt=""
+        />
       </a>
     </div>
   );

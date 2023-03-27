@@ -129,11 +129,10 @@ const Game = () => {
                   </div>
                 </AppButton>
               </div>
-              <div className="mt-4">
-                <p className="font-header font-semibold text-xl">
-                  Food for Thought
-                </p>
-
+              <p className="font-header font-semibold text-xl mt-4">
+                Food for Thought
+              </p>
+              <div className="overflow-x-auto">
                 <div className="flex w-fit mt-2">
                   {foodForThought.map((item) => (
                     <InfoTile imageUrl={item.imageUrl} link={item.link} />
