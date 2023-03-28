@@ -24,7 +24,7 @@ const EffortGraph = () => {
       {data.map((item) => {
         const dum = `relative w-full h-[${item.percentage}%] bg-[${item.color}]`;
         return (
-          <div className="flex flex-col justify-end w-10">
+          <div key={item.color} className="flex flex-col justify-end w-10">
             <div className={dum}></div>
             <p className="text-center">{item.label}</p>
           </div>

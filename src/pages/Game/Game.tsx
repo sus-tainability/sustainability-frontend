@@ -1,8 +1,8 @@
 import {
   IonPage,
   IonHeader,
-  //   IonToolbar,
-  //   IonTitle,
+  IonToolbar,
+  IonTitle,
   IonContent,
 } from "@ionic/react";
 import React from "react";
@@ -53,9 +53,9 @@ const Game = () => {
   return (
     <IonPage>
       <IonHeader>
-        {/* <IonToolbar mode="ios">
+        <IonToolbar mode="ios">
           <IonTitle className="font-body">Game tool</IonTitle>
-        </IonToolbar> */}
+        </IonToolbar>
       </IonHeader>
       <IonContent>
         <div className=" h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
@@ -135,7 +135,11 @@ const Game = () => {
               <div className="overflow-x-auto">
                 <div className="flex w-fit mt-2">
                   {foodForThought.map((item) => (
-                    <InfoTile imageUrl={item.imageUrl} link={item.link} />
+                    <InfoTile
+                      key={item.link}
+                      imageUrl={item.imageUrl}
+                      link={item.link}
+                    />
                   ))}
                 </div>
               </div>
