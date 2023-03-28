@@ -1,9 +1,9 @@
 export const routes = {
-  home: "/",
   authentication: {
     login: "/login",
   },
   story: {
+    base: "/story",
     vote: "/story/vote",
   },
   profile: {

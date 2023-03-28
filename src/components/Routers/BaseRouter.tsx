@@ -58,7 +58,7 @@ const BaseRouter = () => {
     if (!isLoggedIn) {
       return routes.authentication.login;
     }
-    return routes.home;
+    return routes.story.base;
   };
 
   return (
@@ -74,18 +74,23 @@ const BaseRouter = () => {
         {isLoggedIn && (
           <IonTabs>
             <IonRouterOutlet animated={true} mode="ios">
-              <Route exact path={routes.home} component={Home} />
+              <Route exact path={routes.story.base} component={Home} />
               <Route exact path={routes.story.vote} component={Vote} />
               <Route exact path={routes.profile.base} component={Profile} />
               <Route exact path={routes.game.base} component={Game} />
               <Redirect to={defaultRoute()} />
             </IonRouterOutlet>
-            <IonTabBar mode="ios" className="pt-2 pb-5" slot="bottom">
-              <IonTabButton tab="tab1" href={routes.home}>
+            <IonTabBar
+              selectedTab="profile"
+              mode="ios"
+              className="pt-2 pb-5"
+              slot="bottom"
+            >
+              <IonTabButton tab="story" href={routes.story.base}>
                 <IonIcon aria-hidden="true" icon={gameControllerOutline} />
                 <IonLabel>Challenges</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="tab2" href={routes.profile.base}>
+              <IonTabButton tab="profile" href={routes.profile.base}>
                 <IonIcon aria-hidden="true" icon={personCircleOutline} />
                 <IonLabel>Profile</IonLabel>
               </IonTabButton>

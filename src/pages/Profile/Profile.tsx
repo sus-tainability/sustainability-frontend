@@ -1,10 +1,16 @@
 import React, { useEffect } from "react";
-import { IonContent, IonPage, IonText } from "@ionic/react";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonText,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
 import ProfileCard from "@/components/ProfileCard";
 import ProfileBadge from "@/components/ProfileBadge";
 
 import profileBgImg from "@/assets/profile_bg.png";
-import { ReactComponent as BackIcon } from "@/assets/profile/backButton.svg";
 import { ReactComponent as TreeIcon } from "@/assets/profile/tree.svg";
 import { ReactComponent as ConsumptionIcon } from "@/assets/profile/consumption.svg";
 import { ReactComponent as ExploreIcon } from "@/assets/profile/currentlyExploring.svg";
@@ -34,6 +40,11 @@ const Profile: React.FC = () => {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar mode="ios">
+          <IonTitle className="font-body">My Profile</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         <div className="h-full">
           <img
@@ -44,10 +55,6 @@ const Profile: React.FC = () => {
           <div className="fixed w-full h-full bg-black opacity-60" />
 
           <div className="relative flex flex-col gap-6 p-8">
-            <button className="w-fit rounded-lg bg-gradient-to-r from-[#CAE326] to-[#909f28] px-7 py-4">
-              <BackIcon />
-            </button>
-
             <IonText className="text-white text-[36px]">My Profile</IonText>
 
             <div className="flex flex-col gap-2">
