@@ -35,9 +35,11 @@ const Story = () => {
       if (currentEvent.data) {
         await createAttempt(currentEvent.data.id);
         setIsLoading(false);
-      } else if (currentEvent && currentEvent.isSuccess && !currentEvent.data) {
+      } else if (!currentEvent.data) {
+        setIsLoading(false);
         setIsVote(true);
       }
+      console.log(currentEvent.isSuccess);
     }
   };
 
