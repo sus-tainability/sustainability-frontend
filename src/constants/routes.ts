@@ -4,12 +4,9 @@ export const routes = {
   },
   story: {
     base: "/story",
-    vote: "/story/vote",
+    game: "/story/game",
   },
   profile: {
     base: "/profile",
-  },
-  game: {
-    base: "/game",
   },
 };

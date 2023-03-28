@@ -9,11 +9,6 @@ import useAsync from "@/hooks/useAsync";
 import { useApi } from "@/api/ApiHandler";
 import UserService from "@/api/User/UserService";
 import { personCircleOutline, gameControllerOutline } from "ionicons/icons";
-
-import Home from "@pages/Landing/Home";
-import Login from "@pages/Landing/Login";
-import Vote from "@pages/Story/Vote";
-import Profile from "@pages/Profile/Profile";
 import {
   IonApp,
   IonIcon,
@@ -24,7 +19,11 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Game from "@/pages/Game";
+
+import Home from "@pages/Landing/Home";
+import Login from "@pages/Landing/Login";
+import Profile from "@pages/Profile/Profile";
+import Game from "@/pages/Story";
 
 function isTokenExpired(token: string) {
   const expiry = JSON.parse(atob(token.split(".")[1])).exp;
@@ -75,9 +74,8 @@ const BaseRouter = () => {
           <IonTabs>
             <IonRouterOutlet animated={true} mode="ios">
               <Route exact path={routes.story.base} component={Home} />
-              <Route exact path={routes.story.vote} component={Vote} />
               <Route exact path={routes.profile.base} component={Profile} />
-              <Route exact path={routes.game.base} component={Game} />
+              <Route exact path={routes.story.game} component={Game} />
               <Redirect to={defaultRoute()} />
             </IonRouterOutlet>
             <IonTabBar

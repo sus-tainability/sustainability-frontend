@@ -16,6 +16,7 @@ import { ReactComponent as ConsumptionIcon } from "@/assets/profile/consumption.
 import { ReactComponent as ExploreIcon } from "@/assets/profile/currentlyExploring.svg";
 import { ReactComponent as LifeWaterIcon } from "@/assets/profile/lifeBelowWater.svg";
 
+import useAsync from "@/hooks/useAsync";
 import { useApi } from "@/api/ApiHandler";
 import UserService from "@/api/User/UserService";
 
@@ -27,16 +28,18 @@ const Profile: React.FC = () => {
 
   const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
 
+  const { execute, value, status } = useAsync(getSelf, false);
+
   useEffect(() => {
-    const updateUserData = async () => {
-      const res = await getSelf();
-      if (res && res.data) {
-        setUser((prev) => ({ ...prev, ...res.data }));
-      }
-    };
-    updateUserData();
+    execute();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (status === "success" && value && value.data) {
+      setUser((prev) => ({ ...prev, ...value.data }));
+    }
+  }, [setUser, status, value]);
 
   return (
     <IonPage>
