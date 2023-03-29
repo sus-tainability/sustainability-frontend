@@ -31,6 +31,12 @@ export interface PhotoState {
   takenPhoto: PhotoData | null;
 }
 
+export interface VerificationData {
+  imageId: number;
+  imageUrl: string;
+  itemName: string;
+}
+
 export default class AuthService {
   private static getAuthUrl() {
     return "";

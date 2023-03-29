@@ -51,7 +51,9 @@ export const PhotoLanding: React.FC = () => {
                   Back
                 </AppButton>
 
-                <AppButton className="py-5">Let's Go!</AppButton>
+                <AppButton className="py-5" onClick={() => history.push(routes.story.verification)}>
+                  Let's Go!
+                </AppButton>
               </div>
             </div>
           </InformationFooter>

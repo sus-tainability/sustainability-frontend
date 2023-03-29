@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 import { routes } from '@/constants/routes';
-import { toasterAtom, ToasterType } from "@/utils/atoms/toaster";
 
 import { useRecoilState } from "recoil";
+import { toasterAtom, ToasterType } from "@/utils/atoms/toaster";
 import { photoAtom } from "@/utils/atoms/photo/atom";
 
 const TakePhoto = () => {
