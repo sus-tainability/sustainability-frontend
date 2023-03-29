@@ -5,6 +5,7 @@ export const routes = {
   story: {
     base: "/story",
     game: "/story/game",
+    takePhoto: "/story/takephoto",
     photoLanding: "/story/photo",
   },
   profile: {

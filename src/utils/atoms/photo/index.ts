@@ -1,0 +1,1 @@
+export { photoAtom } from "./atom";

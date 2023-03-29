@@ -1,3 +1,5 @@
+import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   IonPage,
   IonHeader,
@@ -5,7 +7,6 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
-import React from "react";
 import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 
 import gameImg from "@/assets/gameImg.png";
@@ -14,6 +15,7 @@ import ProgressTimeline from "@/components/ProgressTimeline";
 import ProgressBar from "@/components/ProgressBar";
 import EffortGraph from "@/components/EffortGraph";
 import InfoTile from "@/components/InfoTile";
+import { routes } from "@/constants/routes";
 
 const foodForThought = [
   {
@@ -40,14 +42,11 @@ const foodForThought = [
     imageUrl:
       "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
     link: "https://www.worldwildlife.org/species/red-panda",
-  },
-  {
-    imageUrl:
-      "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2022-04/_WW187246.jpg?h=485d8330&itok=50jJdB4O",
-    link: "https://www.wwf.org.uk/learn/fascinating-facts/red-panda",
-  },
+  }
 ];
 const Game = () => {
+  const history = useHistory();
+
   const days = 29;
   const target = 3000;
   return (
@@ -84,7 +83,7 @@ const Game = () => {
                     <ShareIcon className="h-12 w-12 mt-1" />
                   </div>
                 </AppButton>
-                <AppButton className="w-full ml-3 p-2 ">
+                <AppButton className="w-full ml-3 p-2" onClick={() => history.push(routes.story.takePhoto)}>
                   <div className="flex flex-col items-center">
                     <p>Contribute</p>
                     <CameraIcon className="h-12 w-12 mt-1" />

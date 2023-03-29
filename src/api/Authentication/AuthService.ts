@@ -22,6 +22,15 @@ interface LoginData {
   user: UserData;
 }
 
+interface PhotoData {
+  path: string | undefined;
+  preview: string;
+}
+
+export interface PhotoState {
+  takenPhoto: PhotoData | null;
+}
+
 export default class AuthService {
   private static getAuthUrl() {
     return "";
