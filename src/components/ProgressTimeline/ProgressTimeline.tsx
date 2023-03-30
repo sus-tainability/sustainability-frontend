@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import React from "react";
-import ProgressIcon1 from "@/assets/progressIcon1.png";
-import ProgressIcon2 from "@/assets/progressIcon2.png";
+import ProgressIcon1 from "@/assets/game/progressIcon1.png";
+import ProgressIcon2 from "@/assets/game/progressIcon2.png";
 
 const steps = [
   { name: "Step 1", href: "#", status: "complete", icon: ProgressIcon1 },

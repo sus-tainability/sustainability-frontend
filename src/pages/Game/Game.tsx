@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 
-import gameImg from "@/assets/gameImg.png";
+import gameImg from "@/assets/game/gameImg.png";
 import AppButton from "@/components/AppButton";
 import ProgressTimeline from "@/components/ProgressTimeline";
 import ProgressBar from "@/components/ProgressBar";
@@ -20,6 +20,8 @@ import { useApi } from "@/api/ApiHandler";
 import EventService, { EventData } from "@/api/Event/EventService";
 import StoryService, { StoryData } from "@/api/Story/StoryService";
 import { Share } from "@capacitor/share";
+import { dialogAtom } from "@/utils/atoms/dialog";
+import { useRecoilState } from "recoil";
 
 const foodForThought = [
   {
@@ -55,6 +57,9 @@ const foodForThought = [
 ];
 const Game = () => {
   const history = useHistory();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setDialogState] = useRecoilState(dialogAtom);
+
   const [getCurrentEvent] = useApi(
     () => EventService.getCurrentEvents(),
     false,
@@ -123,6 +128,20 @@ const Game = () => {
     });
   };
 
+  const onClickContribute = () => {
+    setDialogState({
+      isShown: true,
+      title: "Less Paper, More Trees",
+      message:
+        "Deforestation is the major threat to the red pandas' population. Even when forests are only partially cut down, deforestation can still lead to massive population losses for red pandas",
+      footer: [
+        "Register for e-statements",
+        "Validate Community Posts",
+        "300 Credits",
+      ],
+    });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -143,12 +162,12 @@ const Game = () => {
                 <a href="/profile" className="underline-offset-2 underline">
                   My Impact
                 </a>
-                <a
-                  href="/profile"
+                <p
+                  onClick={onClickContribute}
                   className="underline-offset-2 underline " // align this link to the right
                 >
                   How to Contribute?
-                </a>
+                </p>
               </div>
               <div className="flex justify-between mt-4 text-base">
                 <AppButton

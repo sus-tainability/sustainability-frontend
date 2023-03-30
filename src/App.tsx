@@ -29,6 +29,7 @@ import "./theme/variables.css";
 /* Tailwind styles */
 import "./theme/tailwind.css";
 import Toaster from "./components/Toaster";
+import DialogCard from "./components/DialogCard";
 
 setupIonicReact();
 
@@ -67,6 +68,7 @@ const App: React.FC = () => {
         )}
         <BaseRouter />
         <Toaster />
+        <DialogCard />
       </RecoilRoot>
     </GoogleOAuthProvider>
   );
