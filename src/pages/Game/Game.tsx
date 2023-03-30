@@ -19,6 +19,7 @@ import { routes } from "@/constants/routes";
 import { useApi } from "@/api/ApiHandler";
 import EventService, { EventData } from "@/api/Event/EventService";
 import StoryService, { StoryData } from "@/api/Story/StoryService";
+import { Share } from "@capacitor/share";
 
 const foodForThought = [
   {
@@ -113,6 +114,15 @@ const Game = () => {
     return 0;
   };
 
+  const onClickShare = async () => {
+    await Share.share({
+      title: "Join me in saving the environment!",
+      text: "Complete daily tasks, have fun and promote a sustainable future!",
+      url: window.location.href,
+      dialogTitle: "Share with friends",
+    });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -141,7 +151,11 @@ const Game = () => {
                 </a>
               </div>
               <div className="flex justify-between mt-4 text-base">
-                <AppButton bgColour="bg-white" className="w-full mr-3 p-2 ">
+                <AppButton
+                  bgColour="bg-white"
+                  className="w-full mr-3 p-2 "
+                  onClick={onClickShare}
+                >
                   <div className="flex flex-col items-center">
                     <p>Share</p>
                     <ShareIcon className="h-12 w-12 mt-1" />
