@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   IonPage,
@@ -16,29 +16,37 @@ import ProgressBar from "@/components/ProgressBar";
 import EffortGraph from "@/components/EffortGraph";
 import InfoTile from "@/components/InfoTile";
 import { routes } from "@/constants/routes";
+import { useApi } from "@/api/ApiHandler";
+import EventService, { EventData } from "@/api/Event/EventService";
+import StoryService, { StoryData } from "@/api/Story/StoryService";
 
 const foodForThought = [
   {
+    id: 1,
     imageUrl:
       "https://www.mandai.com/content/dam/wrs/river-safari/animals/red-panda/the-panda-connection.jpg.transform/compress/resize1000/img.jpg",
     link: "https://www.mandai.com/en/river-wonders/animals-and-zones/red-panda.html",
   },
   {
+    id: 2,
     imageUrl:
       "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
     link: "https://www.worldwildlife.org/species/red-panda",
   },
   {
+    id: 3,
     imageUrl:
       "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2022-04/_WW187246.jpg?h=485d8330&itok=50jJdB4O",
     link: "https://www.wwf.org.uk/learn/fascinating-facts/red-panda",
   },
   {
+    id: 4,
     imageUrl:
       "https://www.mandai.com/content/dam/wrs/river-safari/animals/red-panda/the-panda-connection.jpg.transform/compress/resize1000/img.jpg",
     link: "https://www.mandai.com/en/river-wonders/animals-and-zones/red-panda.html",
   },
   {
+    id: 5,
     imageUrl:
       "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
     link: "https://www.worldwildlife.org/species/red-panda",
@@ -46,9 +54,65 @@ const foodForThought = [
 ];
 const Game = () => {
   const history = useHistory();
+  const [getCurrentEvent] = useApi(
+    () => EventService.getCurrentEvents(),
+    false,
+    false,
+    false
+  );
 
-  const days = 29;
-  const target = 3000;
+  const [getCurrentStory] = useApi(
+    () => StoryService.getCurrentStory(),
+    false,
+    false,
+    false
+  );
+  const [event, setEvent] = useState<EventData>();
+  const [story, setStory] = useState<StoryData>();
+
+  const getData = async () => {
+    const currentEvent = await getCurrentEvent();
+    if (currentEvent && currentEvent.data) {
+      setEvent(currentEvent.data);
+    }
+    const currentStory = await getCurrentStory();
+    if (currentStory && currentStory.data) {
+      setStory(currentStory.data);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getProgress = () => {
+    if (event) {
+      return (event.attempt.assets.length / event.requiredAssets) * 100;
+    }
+    return 0;
+  };
+
+  const getDaysLeft = () => {
+    if (event && story) {
+      const partOf = story.partOf.filter(
+        (part) => part.eventOneId === event.id || part.eventTwoId === event.id
+      );
+      const startDate = Date.parse(partOf[0].startDate);
+      const duration = event.eventDuration;
+      const endDate = startDate + duration * 24 * 60 * 60 * 1000;
+
+      const today = new Date();
+      const diff = endDate - today.getTime();
+      if (diff < 0) {
+        return 0;
+      }
+      const daysLeft = Math.ceil(diff / (1000 * 3600 * 24));
+      return daysLeft;
+    }
+    return 0;
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -99,15 +163,17 @@ const Game = () => {
                   className="w-full p-2 px-5 h-32 flex flex-col text-sm"
                 >
                   <p className="text-lg font-header font-bold text-left">
-                    Less Paper, More Trees
+                    {event?.name}
                   </p>
                   <p className="float-right text-right self-stretch">
-                    {days} days left
+                    {getDaysLeft()} days left
                   </p>
-                  <ProgressBar progress={60} />
+                  <ProgressBar progress={getProgress()} />
                   <div className="flex justify-between self-stretch">
-                    <p>0</p>
-                    <p className="">Target: {target} e-statement opt-in</p>
+                    <p>{event?.attempt.assets.length}</p>
+                    <p className="">
+                      Target: {event?.requiredAssets} contributions
+                    </p>
                   </div>
                 </AppButton>
               </div>
@@ -138,7 +204,7 @@ const Game = () => {
                 <div className="flex w-fit mt-2">
                   {foodForThought.map((item) => (
                     <InfoTile
-                      key={item.imageUrl}
+                      key={item.id}
                       imageUrl={item.imageUrl}
                       link={item.link}
                     />
