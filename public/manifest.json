@@ -1,6 +1,6 @@
 {
   "short_name": "Sus",
-  "name": "My Ionic App",
+  "name": "Sus-tainability",
   "icons": [
     {
       "src": "assets/icon/favicon.png",
@@ -11,7 +11,7 @@
       "src": "assets/icon/icon.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable"
+      "purpose": "maskable any"
     }
   ],
   "start_url": ".",
