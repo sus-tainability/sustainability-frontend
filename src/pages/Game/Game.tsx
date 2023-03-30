@@ -42,7 +42,7 @@ const foodForThought = [
     imageUrl:
       "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
     link: "https://www.worldwildlife.org/species/red-panda",
-  }
+  },
 ];
 const Game = () => {
   const history = useHistory();
@@ -83,7 +83,10 @@ const Game = () => {
                     <ShareIcon className="h-12 w-12 mt-1" />
                   </div>
                 </AppButton>
-                <AppButton className="w-full ml-3 p-2" onClick={() => history.push(routes.story.takePhoto)}>
+                <AppButton
+                  className="w-full ml-3 p-2"
+                  onClick={() => history.push(routes.story.takePhoto)}
+                >
                   <div className="flex flex-col items-center">
                     <p>Contribute</p>
                     <CameraIcon className="h-12 w-12 mt-1" />
@@ -135,7 +138,7 @@ const Game = () => {
                 <div className="flex w-fit mt-2">
                   {foodForThought.map((item) => (
                     <InfoTile
-                      key={item.link}
+                      key={item.imageUrl}
                       imageUrl={item.imageUrl}
                       link={item.link}
                     />
