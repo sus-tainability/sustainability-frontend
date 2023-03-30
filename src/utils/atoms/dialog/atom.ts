@@ -10,7 +10,7 @@ interface DialogState {
 export const dialogAtom = atom<DialogState>({
   key: "dialogAtom",
   default: {
-    isShown: true,
+    isShown: false,
     title: "",
     message: "",
     footer: [],
