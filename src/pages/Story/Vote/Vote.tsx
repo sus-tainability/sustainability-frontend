@@ -14,11 +14,19 @@ import AppButton from "@/components/AppButton";
 import voteImg from "@/assets/voteImg.png";
 import boxImg from "@/assets/boxImg.png";
 import paperImg from "@/assets/paperImg.png";
+import { routes } from "@/constants/routes";
+import { useHistory } from "react-router";
 
 const Vote = () => {
   const [isOptionOne, setIsOptionOne] = useState(false);
   const [isOptionTwo, setIsOptionTwo] = useState(false);
   const hasVoted = isOptionOne || isOptionTwo;
+
+  const history = useHistory();
+
+  const redirectToGame = () => {
+    history.push(routes.story.game);
+  };
 
   return (
     <IonPage>
@@ -30,7 +38,7 @@ const Vote = () => {
       <IonContent>
         <div className="h-full bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
           <img className="w-full" src={voteImg} />
-          <InformationFooter heightOffSet={400}>
+          <InformationFooter heightOffSet={300}>
             <div className="p-8">
               <p className="text-lightShade text-4xl font-header font-bold">
                 Less Paper, <br /> More Trees
@@ -74,12 +82,12 @@ const Vote = () => {
                         </div>
 
                         <div
-                          style={{ height: `${100 - 40}%` }}
+                          style={{ height: `${isOptionOne ? 60 : 56}%` }}
                           className={`absolute py-2 bottom-0 flex items-center justify-center
                               w-full greenGradient rounded origin-bottom animate-grow`}
                         >
                           <p className="font-bold font-header text-4xl animate-fadeIn">
-                            60%
+                            {isOptionOne ? "60%" : "56%"}
                           </p>
                         </div>
                       </>
@@ -112,18 +120,30 @@ const Vote = () => {
                         </div>
 
                         <div
-                          style={{ height: `${100 - 60}%` }}
+                          style={{ height: `${isOptionOne ? 40 : 44}%` }}
                           className={`absolute py-2 bottom-0 flex items-center justify-center
                               w-full greenGradient rounded origin-bottom animate-grow`}
                         >
                           <p className="font-bold font-header text-4xl animate-fadeIn">
-                            40%
+                            {isOptionOne ? "40%" : "44%"}
                           </p>
                         </div>
                       </>
                     )}
                   </div>
                 </AppButton>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    redirectToGame();
+                  }}
+                  className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
+                >
+                  Try out the Game Page! (Demo)
+                </button>
               </div>
             </div>
           </InformationFooter>
