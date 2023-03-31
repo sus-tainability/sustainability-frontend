@@ -1,4 +1,5 @@
 import ApiService, { ApiData } from "@/api/ApiService";
+import { PhotoState } from "@/utils/atoms/photo/atom";
 
 export type AssetData = {
   id: number;
@@ -8,8 +9,19 @@ export type AssetData = {
 };
 
 export type CreateImageAssetData = {
-  file: File;
+  photoData: PhotoState;
   attemptId: number;
+};
+
+export type PendingAsset = {
+  id: number;
+  imageUrl: string;
+  status: string;
+  eventId: number;
+  name: string;
+  percentageComplete: number;
+  description: string;
+  validationText: string;
 };
 
 export default class AssetService {
@@ -20,17 +32,25 @@ export default class AssetService {
   public static async createNewImageAsset(
     createImageAssetData: CreateImageAssetData
   ) {
+    if (!createImageAssetData || !createImageAssetData.photoData.takenPhoto)
+      return Promise.reject("Null Image");
+
     const formData = new FormData();
-    formData.append("file", createImageAssetData.file);
+    const res = await fetch(createImageAssetData.photoData.takenPhoto.preview);
+    const blob = await res.blob();
+    formData.append("file", blob, "filename.jpg");
+
     formData.append("attemptId", createImageAssetData.attemptId.toString());
     try {
       const response = await ApiService.request(
         {
-          url: `${this.getAssetUrl()}/new`,
+          url: `${this.getAssetUrl()}/images/new`,
           method: "POST",
           data: formData,
         },
-        true
+        true,
+        "",
+        "multipart/form-data"
       );
       return response;
     } catch (error) {
