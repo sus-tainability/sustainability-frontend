@@ -6,6 +6,7 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
+  useIonRouter,
 } from "@ionic/react";
 import { useLocation } from "react-router-dom";
 
@@ -17,10 +18,11 @@ import moment, { Moment } from "moment";
 
 import { useApi } from "@/api/ApiHandler";
 import EventService from "@/api/Event/EventService";
+import { demoAtom } from "@/utils/atoms/demo";
+import { useRecoilState } from "recoil";
 
 import voteImg from "@/assets/voteImg.png";
 import { routes } from "@/constants/routes";
-import { useHistory } from "react-router";
 
 const Vote = () => {
   const [currentEvents, setCurrentEvents] = useState<PartOfWithEvents>();
@@ -28,8 +30,11 @@ const Vote = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isOptionOne, setIsOptionOne] = useState(false);
   const [isOptionTwo, setIsOptionTwo] = useState(false);
+  const [nextId, setNextId] = useState<number>();
+  const [demo, setDemo] = useRecoilState(demoAtom);
   const hasVoted = isOptionOne || isOptionTwo;
   const location = useLocation();
+  const router = useIonRouter();
   const [manualGetNextEvents] = useApi(
     (ids: number[]) => EventService.getNextEventsByIds(ids[0], ids[1]),
     false,
@@ -93,10 +98,13 @@ const Vote = () => {
     }
   }, [currentEvents, currentEvents?.startDate]);
 
-  const history = useHistory();
-
   const redirectToGame = () => {
-    history.push(routes.story.game);
+    const route = `${routes.story.base}/game/${nextId}`;
+    const newPointer = demo.ids.find(
+      (id) => id[0] === nextId && id.length === 1
+    );
+    setDemo((prev) => ({ ...prev, pointer: newPointer ? newPointer[0] : 0 }));
+    router.push(route, "forward", "replace");
   };
 
   return (
@@ -133,6 +141,7 @@ const Vote = () => {
                       onClick={() => {
                         setIsOptionOne(true);
                         setIsOptionTwo(false);
+                        setNextId(currentEvents.eventOne.id);
                       }}
                       className="h-28 w-28"
                     >
@@ -172,6 +181,7 @@ const Vote = () => {
                       onClick={() => {
                         setIsOptionOne(false);
                         setIsOptionTwo(true);
+                        setNextId(currentEvents.eventTwo.id);
                       }}
                       className="h-28 w-28"
                     >
@@ -208,17 +218,19 @@ const Vote = () => {
                     </AppButton>
                   </div>
                   <div>
-                    <button
-                      type="submit"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        redirectToGame();
-                      }}
-                      className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
-                    >
-                      Proceed to the Game
-                      <span className="text-red-400 ml-1">(Demo)</span>
-                    </button>
+                    {nextId && (
+                      <button
+                        type="submit"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          redirectToGame();
+                        }}
+                        className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
+                      >
+                        Proceed to the Game
+                        <span className="text-red-400 ml-1">(Demo)</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </InformationFooter>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   IonPage,
   IonHeader,
   IonToolbar,
   IonTitle,
   IonContent,
+  useIonRouter,
 } from "@ionic/react";
 import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 
@@ -23,6 +24,7 @@ import { Share } from "@capacitor/share";
 import { dialogAtom } from "@/utils/atoms/dialog";
 import { useRecoilState } from "recoil";
 import AttemptService from "@/api/Attempt/AttemptService";
+import { demoAtom } from "@/utils/atoms/demo";
 
 const foodForThought = [
   {
@@ -57,7 +59,7 @@ const foodForThought = [
   },
 ];
 const Game = () => {
-  const history = useHistory();
+  const router = useIonRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setDialogState] = useRecoilState(dialogAtom);
   const [progressSteps, setProgressSteps] = useState<Step[]>([]);
@@ -90,6 +92,7 @@ const Game = () => {
     false
   );
 
+  const [demo, setDemoState] = useRecoilState(demoAtom);
   const [event, setEvent] = useState<EventData>();
   const [story, setStory] = useState<StoryData>();
   const location = useLocation();
@@ -126,7 +129,24 @@ const Game = () => {
   };
 
   const redirectToVote = () => {
-    history.push("/story/vote");
+    const p = demo.pointer;
+    console.log(p);
+    const newPointer =
+      p + 2 > demo.ids.length - 2
+        ? 0
+        : demo.ids[p + 1].length === 2
+        ? p + 1
+        : p + 2;
+    console.log(newPointer);
+    setDemoState((prev) => ({ ...prev, pointer: newPointer }));
+    if (newPointer === 0) {
+      router.push(routes.story.base, "forward", "replace");
+      return;
+    }
+
+    const nextIds = demo.ids[newPointer];
+    const url = `${routes.story.base}/vote/${nextIds[0]}/${nextIds[1]}`;
+    router.push(url);
   };
 
   useEffect(() => {
@@ -187,23 +207,21 @@ const Game = () => {
 
   // construct Steps
   useEffect(() => {
-    if (!story) return;
-    if (!isMockRoute) return;
-    const id = location.pathname.split("/")[3];
+    if (!story || !event) return;
+    const id = event.id;
     const partOfArr = story.partOf;
     const steps: Step[] = partOfArr.map((part) => {
-      const isCurrent =
-        part.eventOneId === parseInt(id) || part.eventTwoId === parseInt(id);
+      const isCurrent = part.eventOneId === id || part.eventTwoId === id;
       const icon = isCurrent ? "checkmark-circle" : "checkmark-circle-outline";
       const status = isCurrent
         ? "current"
-        : parseInt(id) > part.eventOneId
+        : id > part.eventOneId
         ? "complete"
         : "upcoming";
       return { name: "", icon, status, href: "#" };
     });
     setProgressSteps(steps);
-  }, [isMockRoute, location.pathname, story]);
+  }, [event, isMockRoute, location.pathname, story]);
 
   return (
     <IonPage>
@@ -245,7 +263,7 @@ const Game = () => {
                 </AppButton>
                 <AppButton
                   className="w-full ml-3 p-2"
-                  onClick={() => history.push(routes.story.takePhoto)}
+                  onClick={() => router.push(routes.story.takePhoto)}
                 >
                   <div className="flex flex-col items-center">
                     <p>Contribute</p>
@@ -316,7 +334,14 @@ const Game = () => {
                   }}
                   className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
                 >
-                  Try out the next event!
+                  {demo.ids
+                    .map((x) => x.toString())
+                    .indexOf(event?.id.toString() || "0") +
+                    2 >
+                  demo.ids.length - 1
+                    ? "Restart"
+                    : "Try out the next event!"}
+
                   <span className="text-red-400 ml-1">(Demo)</span>
                 </button>
               </div>

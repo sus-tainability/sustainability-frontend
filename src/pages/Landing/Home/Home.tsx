@@ -12,10 +12,14 @@ import AppButton from "@/components/AppButton";
 import InformationFooter from "@/components/InformationFooter";
 import { routes } from "@/constants/routes";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { demoAtom } from "@/utils/atoms/demo";
+import { useRecoilState } from "recoil";
 
 const Home: React.FC = () => {
   const router = useIonRouter();
   const [hasJoined, setHasJoined] = useLocalStorage("hasJoined", false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [demo, _] = useRecoilState(demoAtom);
 
   return (
     <IonPage>
@@ -40,12 +44,20 @@ const Home: React.FC = () => {
               <AppButton
                 onClick={() => {
                   setHasJoined(true);
-                  router.push(routes.story.game, "forward", "replace");
+                  const base = `${routes.story.base}`;
+                  const nextUrl =
+                    demo.ids[demo.pointer].length === 2
+                      ? `${base}/vote/${demo.ids[demo.pointer][0]}/${
+                          demo.ids[demo.pointer][1]
+                        }`
+                      : `${base}/game/${demo.ids[demo.pointer][0]}`;
+                  router.push(nextUrl.trim(), "forward", "replace");
                 }}
                 className="py-4 px-10 mt-8"
               >
                 {hasJoined && "Resume Journey"}
                 {!hasJoined && "Join Now"}
+                <span className="ml-1 text-red-400 font-bold">(Demo)</span>
               </AppButton>
             </div>
           </InformationFooter>
