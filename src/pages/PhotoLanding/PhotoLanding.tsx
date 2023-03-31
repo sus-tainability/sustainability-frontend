@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   IonButton,
   IonButtons,
@@ -9,6 +8,7 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonRouter,
 } from "@ionic/react";
 
 import InformationFooter from "@/components/InformationFooter";
@@ -21,7 +21,7 @@ import { ReactComponent as PhotoPlaceholder } from "@/assets/photoPlaceholder.sv
 import { routes } from "@/constants/routes";
 
 export const PhotoLanding: React.FC = () => {
-  const history = useHistory();
+  const router = useIonRouter();
   const [photo] = useRecoilState(photoAtom);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -59,14 +59,14 @@ export const PhotoLanding: React.FC = () => {
                 <AppButton
                   bgColour="bg-[#F5F8F8]"
                   className="py-5"
-                  onClick={() => history.push(routes.story.game)}
+                  onClick={() => router.push(routes.story.game)}
                 >
                   Back
                 </AppButton>
 
                 <AppButton
                   className="py-5"
-                  onClick={() => history.push(routes.story.verification)}
+                  onClick={() => router.push(routes.story.verification)}
                 >
                   Let's Go!
                 </AppButton>

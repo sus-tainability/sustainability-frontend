@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
 import { routes } from "@/constants/routes";
@@ -7,11 +6,12 @@ import { routes } from "@/constants/routes";
 import { useRecoilState } from "recoil";
 import { toasterAtom, ToasterType } from "@/utils/atoms/toaster";
 import { photoAtom } from "@/utils/atoms/photo/atom";
+import { useIonRouter } from "@ionic/react";
 
 const TakePhoto = () => {
+  const router = useIonRouter();
   const [photo, setPhoto] = useRecoilState(photoAtom);
   const [, setToasterState] = useRecoilState(toasterAtom);
-  const history = useHistory();
 
   const takePhotoHandler = async () => {
     try {
@@ -31,7 +31,7 @@ const TakePhoto = () => {
           preview: takenPhoto.webPath,
         },
       });
-      history.push(routes.story.photoLanding);
+      router.push(routes.story.photoLanding);
     } catch (err: any) {
       setToasterState({
         title: "Error",
@@ -39,7 +39,7 @@ const TakePhoto = () => {
         type: ToasterType.ERROR,
         isShown: true,
       });
-      history.push(routes.story.base);
+      router.push(routes.story.base);
     }
   };
 
