@@ -28,7 +28,6 @@ import Game from "@/pages/Story";
 import PhotoLanding from "@/pages/PhotoLanding/PhotoLanding";
 import TakePhoto from "@/pages/TakePhoto";
 import Verification from "@/pages/Verification";
-import GameTest from "@/pages/Game";
 
 function isTokenExpired(token: string) {
   const expiry = JSON.parse(atob(token.split(".")[1])).exp;
