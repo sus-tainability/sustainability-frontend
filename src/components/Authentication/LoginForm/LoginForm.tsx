@@ -8,8 +8,8 @@ import { useApi } from "@/api/ApiHandler";
 import AuthService from "@/api/Authentication/AuthService";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("user1@example.com");
+  const [password, setPassword] = useState("asdasd");
 
   const [login] = useApi(() => AuthService.login(email, password), true, true);
   const { execute, status, value } = useAsync(login, false);
@@ -40,7 +40,7 @@ const LoginForm = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    value={email.length > 0 ? email : "user1@example.com"}
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     name="email"
@@ -61,7 +61,7 @@ const LoginForm = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    value={password.length > 0 ? password : "asdasd"}
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     name="password"
