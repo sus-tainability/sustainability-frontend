@@ -62,7 +62,9 @@ const Verification: React.FC = () => {
   );
 
   const getData = async () => {
+    setIsLoading(true);
     const res = await getPendingAssets();
+    setIsLoading(false);
     if (res && res.data) {
       res.data.sort(
         (a: PendingAsset, b: PendingAsset) =>
