@@ -28,7 +28,6 @@ import Game from "@/pages/Story";
 import PhotoLanding from "@/pages/PhotoLanding/PhotoLanding";
 import TakePhoto from "@/pages/TakePhoto";
 import Verification from "@/pages/Verification";
-import Vote from "@pages/Story/Vote";
 
 function isTokenExpired(token: string) {
   const expiry = JSON.parse(atob(token.split(".")[1])).exp;
@@ -80,8 +79,9 @@ const BaseRouter = () => {
             <IonRouterOutlet animated={true} mode="ios">
               <Route exact path={routes.story.base} component={Home} />
               <Route exact path={routes.profile.base} component={Profile} />
+              <Route exact path={routes.story.mockGame} component={Game} />
+              <Route exact path={routes.story.mockVote} component={Game} />
               <Route exact path={routes.story.game} component={Game} />
-              <Route exact path={"/story/vote"} component={Vote} />
               <Route
                 exact
                 path={routes.story.takePhoto}

@@ -37,6 +37,24 @@ export default class EventService {
     }
   }
 
+  public static async getNextEventsByIds(
+    id1: number,
+    id2: number
+  ): Promise<ApiData> {
+    try {
+      const response = await ApiService.request(
+        {
+          url: `${this.getEventUrl()}/next/${id1}/${id2}`,
+          method: "GET",
+        },
+        true
+      );
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   public static async getCurrentEvents(): Promise<ApiData> {
     try {
       const response = await ApiService.request(
