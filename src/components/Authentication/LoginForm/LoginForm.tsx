@@ -40,7 +40,7 @@ const LoginForm = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    value={email}
+                    value={email.length > 0 ? email : "user1@example.com"}
                     onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     name="email"
@@ -61,7 +61,7 @@ const LoginForm = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    value={password}
+                    value={password.length > 0 ? password : "asdasd"}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     name="password"
