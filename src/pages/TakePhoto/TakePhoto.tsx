@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
-import { routes } from '@/constants/routes';
+import { routes } from "@/constants/routes";
 
 import { useRecoilState } from "recoil";
 import { toasterAtom, ToasterType } from "@/utils/atoms/toaster";
@@ -25,12 +25,13 @@ const TakePhoto = () => {
       if (!photo || !takenPhoto.webPath) return;
 
       setPhoto({
+        ...photo,
         takenPhoto: {
           path: takenPhoto.path,
           preview: takenPhoto.webPath,
-        }
-      })
-      history.push(routes.story.photoLanding)
+        },
+      });
+      history.push(routes.story.photoLanding);
     } catch (err: any) {
       setToasterState({
         title: "Error",
@@ -38,13 +39,13 @@ const TakePhoto = () => {
         type: ToasterType.ERROR,
         isShown: true,
       });
-      history.push(routes.story.base)
+      history.push(routes.story.base);
     }
   };
 
   useEffect(() => {
     takePhotoHandler();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <></>;

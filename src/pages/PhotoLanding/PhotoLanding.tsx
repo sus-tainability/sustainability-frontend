@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IonButton, IonButtons, IonContent, IonModal, IonPage, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonModal,
+  IonPage,
+  IonText,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
 
 import InformationFooter from "@/components/InformationFooter";
 import AppButton from "@/components/AppButton/AppButton";
@@ -8,7 +17,7 @@ import { useRecoilState } from "recoil";
 import { photoAtom } from "@/utils/atoms/photo/atom";
 
 import photoLandingImg from "@/assets/photoLandingImg.png";
-import { ReactComponent as PhotoPlaceholder } from "@/assets/photoPlaceholder.svg"
+import { ReactComponent as PhotoPlaceholder } from "@/assets/photoPlaceholder.svg";
 import { routes } from "@/constants/routes";
 
 export const PhotoLanding: React.FC = () => {
@@ -28,7 +37,7 @@ export const PhotoLanding: React.FC = () => {
                 almost there!
               </IonText>
 
-              <div 
+              <div
                 className="bg-white rounded-xl flex justify-between items-center px-5 py-4"
                 onClick={() => setIsOpen(true)}
               >
@@ -47,11 +56,18 @@ export const PhotoLanding: React.FC = () => {
               </IonText>
 
               <div className="grid grid-cols-2 grid-rows-1 gap-4">
-                <AppButton bgColour="bg-[#F5F8F8]" className="py-5" onClick={() => history.push(routes.story.game)}>
+                <AppButton
+                  bgColour="bg-[#F5F8F8]"
+                  className="py-5"
+                  onClick={() => history.push(routes.story.game)}
+                >
                   Back
                 </AppButton>
 
-                <AppButton className="py-5" onClick={() => history.push(routes.story.verification)}>
+                <AppButton
+                  className="py-5"
+                  onClick={() => history.push(routes.story.verification)}
+                >
                   Let's Go!
                 </AppButton>
               </div>
@@ -64,18 +80,15 @@ export const PhotoLanding: React.FC = () => {
             <IonToolbar>
               <IonTitle>Preview</IonTitle>
               <IonButtons slot="end">
-                <IonButton onClick={() => setIsOpen(false)}>
-                  Close
-                </IonButton>
+                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
               </IonButtons>
             </IonToolbar>
-            {!photo.takenPhoto && <IonText className="text-bold">
-              No Photo Taken!
-            </IonText>}
-            {photo.takenPhoto && <img
-              src={photo.takenPhoto.preview}
-              alt='Preview'
-            />}
+            {!photo.takenPhoto && (
+              <IonText className="text-bold">No Photo Taken!</IonText>
+            )}
+            {photo.takenPhoto && (
+              <img src={photo.takenPhoto.preview} alt="Preview" />
+            )}
           </IonContent>
         </IonModal>
       </IonContent>

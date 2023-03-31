@@ -42,7 +42,6 @@ const Story = () => {
         setIsLoading(false);
         setIsVote(true);
       }
-      console.log(currentEvent.isSuccess);
     }
   };
 
