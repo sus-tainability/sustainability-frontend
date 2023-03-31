@@ -142,7 +142,7 @@ const Vote = () => {
                   }}
                   className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
                 >
-                  Try out the Game Page! (Demo)
+                  Proceed to the Game!
                 </button>
               </div>
             </div>
