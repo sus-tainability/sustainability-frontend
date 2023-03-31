@@ -32,7 +32,6 @@ export default class AssetService {
   public static async createNewImageAsset(
     createImageAssetData: CreateImageAssetData
   ) {
-    console.log(createImageAssetData);
     if (!createImageAssetData || !createImageAssetData.photoData.takenPhoto)
       return Promise.reject("Null Image");
 

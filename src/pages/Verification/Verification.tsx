@@ -72,7 +72,6 @@ const Verification: React.FC = () => {
       if (eventRes && eventRes.data) {
         setAttemptId(eventRes.data.attempt.attemptId);
       }
-      console.log(eventRes);
     }
   };
 
@@ -82,12 +81,10 @@ const Verification: React.FC = () => {
   }, []);
 
   const createAsset = async () => {
-    console.log("creating");
-    const res = await createNewImageAsset({
+    await createNewImageAsset({
       photoData: photoState,
       attemptId,
     });
-    console.log(res);
   };
 
   const nextImage = async () => {
