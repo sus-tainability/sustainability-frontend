@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   IonPage,
   IonHeader,
@@ -22,6 +22,7 @@ import StoryService, { StoryData } from "@/api/Story/StoryService";
 import { Share } from "@capacitor/share";
 import { dialogAtom } from "@/utils/atoms/dialog";
 import { useRecoilState } from "recoil";
+import AttemptService from "@/api/Attempt/AttemptService";
 
 const foodForThought = [
   {
@@ -73,17 +74,53 @@ const Game = () => {
     false,
     false
   );
+
+  const [getEventById] = useApi(
+    (id: number) => EventService.getEventById(id),
+    false,
+    false,
+    false
+  );
+
+  const [createAttempt] = useApi(
+    (eventId: number) => AttemptService.createAttempt(eventId),
+    false,
+    false,
+    false
+  );
+
   const [event, setEvent] = useState<EventData>();
   const [story, setStory] = useState<StoryData>();
+  const location = useLocation();
+
+  const isMockRoute = location.pathname.split("/").length >= 4;
 
   const getData = async () => {
-    const currentEvent = await getCurrentEvent();
-    if (currentEvent && currentEvent.data) {
-      setEvent(currentEvent.data);
-    }
-    const currentStory = await getCurrentStory();
-    if (currentStory && currentStory.data) {
-      setStory(currentStory.data);
+    if (!isMockRoute) {
+      const [currentEvent, currentStory] = await Promise.all([
+        getCurrentEvent(),
+        getCurrentStory(),
+      ]);
+      if (currentEvent && currentEvent.data) {
+        setEvent(currentEvent.data);
+      }
+      if (currentStory && currentStory.data) {
+        setStory(currentStory.data);
+      }
+    } else {
+      const id = location.pathname.split("/")[3];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [currentStory, _] = await Promise.all([
+        getCurrentStory(),
+        createAttempt(id),
+      ]);
+      const currentEvent = await getEventById(id);
+      if (currentEvent && currentEvent.data) {
+        setEvent(currentEvent.data);
+      }
+      if (currentStory && currentStory.data) {
+        setStory(currentStory.data);
+      }
     }
   };
 
@@ -98,7 +135,9 @@ const Game = () => {
 
   const getProgress = () => {
     if (event) {
-      return (event.attempt.assets.length / event.requiredAssets) * 100;
+      const progress =
+        (event.attempt.assets.length / event.requiredAssets) * 100;
+      return progress > 100 ? 100 : progress;
     }
     return 0;
   };
@@ -135,13 +174,12 @@ const Game = () => {
   const onClickContribute = () => {
     setDialogState({
       isShown: true,
-      title: "Less Paper, More Trees",
-      message:
-        "Deforestation is the major threat to the red pandas' population. Even when forests are only partially cut down, deforestation can still lead to massive population losses for red pandas",
+      title: event?.name || "",
+      message: event?.description || "",
       footer: [
-        "Register for e-statements",
+        "Contribute",
         "Validate Community Posts",
-        "300 Credits",
+        `${event?.reward?.toString() || "0"} Credits`,
       ],
     });
   };
@@ -150,7 +188,7 @@ const Game = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar mode="ios">
-          <IonTitle className="font-body">Game tool</IonTitle>
+          <IonTitle className="font-body">{event?.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -170,7 +208,7 @@ const Game = () => {
                   onClick={onClickContribute}
                   className="underline-offset-2 underline " // align this link to the right
                 >
-                  How to Contribute?
+                  Event Information
                 </p>
               </div>
               <div className="flex justify-between mt-4 text-base">
@@ -258,6 +296,7 @@ const Game = () => {
                   className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
                 >
                   Try out the next event!
+                  <span className="text-red-400 ml-1">(Demo)</span>
                 </button>
               </div>
             </div>
