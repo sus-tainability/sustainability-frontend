@@ -9,6 +9,7 @@ import {
   useIonRouter,
 } from "@ionic/react";
 import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
+import LoadingPage from "@/components/LoadingPage/LoadingPage";
 
 import gameImg from "@/assets/game/gameImg.png";
 import AppButton from "@/components/AppButton";
@@ -63,6 +64,7 @@ const Game = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setDialogState] = useRecoilState(dialogAtom);
   const [progressSteps, setProgressSteps] = useState<Step[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [getCurrentEvent] = useApi(
     () => EventService.getCurrentEvents(),
@@ -101,6 +103,7 @@ const Game = () => {
 
   const getData = async () => {
     if (!isMockRoute) {
+      setIsLoading(true);
       const [currentEvent, currentStory] = await Promise.all([
         getCurrentEvent(),
         getCurrentStory(),
@@ -111,7 +114,9 @@ const Game = () => {
       if (currentStory && currentStory.data) {
         setStory(currentStory.data);
       }
+      setIsLoading(false);
     } else {
+      setIsLoading(true);
       const id = location.pathname.split("/")[3];
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [currentStory, _] = await Promise.all([
@@ -125,6 +130,7 @@ const Game = () => {
       if (currentStory && currentStory.data) {
         setStory(currentStory.data);
       }
+      setIsLoading(false);
     }
   };
 
@@ -224,132 +230,137 @@ const Game = () => {
   }, [event, isMockRoute, location.pathname, story]);
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar mode="ios">
-          <IonTitle className="font-body">{event?.name}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <div className=" h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
-          <img className="w-full absolute top-0" src={gameImg} alt="test" />
-          <ProgressTimeline steps={progressSteps} />
-          <div
-            className="bg-[#d9d9d91a] rounded-t-3xl  backdrop-blur mt-[35vh]"
-            style={{ WebkitBackdropFilter: "blur(8px)" }}
-          >
-            <div className="p-8 min-h-[100%]">
-              <div className="flex justify-between text-[#312E3E] font-medium">
-                <a href="/profile" className="underline-offset-2 underline">
-                  My Impact
-                </a>
-                <p
-                  onClick={onClickContribute}
-                  className="underline-offset-2 underline " // align this link to the right
-                >
-                  Event Information
-                </p>
-              </div>
-              <div className="flex justify-between mt-4 text-base">
-                <AppButton
-                  bgColour="bg-white"
-                  className="w-full mr-3 p-2 "
-                  onClick={onClickShare}
-                >
-                  <div className="flex flex-col items-center">
-                    <p>Share</p>
-                    <ShareIcon className="h-12 w-12 mt-1" />
-                  </div>
-                </AppButton>
-                <AppButton
-                  className="w-full ml-3 p-2"
-                  onClick={() => router.push(routes.story.takePhoto)}
-                >
-                  <div className="flex flex-col items-center">
-                    <p>Contribute</p>
-                    <CameraIcon className="h-12 w-12 mt-1" />
-                  </div>
-                </AppButton>
-              </div>
-              <div className="mt-4">
-                <AppButton
-                  bgColour="bg-white"
-                  className="w-full p-2 px-5 h-32 flex flex-col text-sm"
-                >
-                  <p className="text-lg font-header font-bold text-left">
-                    {event?.name}
-                  </p>
-                  <p className="float-right text-right self-stretch">
-                    {getDaysLeft()} days left
-                  </p>
-                  <ProgressBar progress={getProgress()} />
-                  <div className="flex justify-between self-stretch">
-                    <p>{event?.attempt.assets.length}</p>
-                    <p className="">
-                      Target: {event?.requiredAssets} contributions
+    <>
+      {isLoading && <LoadingPage />}
+      {!isLoading && (
+        <IonPage>
+          <IonHeader>
+            <IonToolbar mode="ios">
+              <IonTitle className="font-body">{event?.name}</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent>
+            <div className=" h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
+              <img className="w-full absolute top-0" src={gameImg} alt="test" />
+              <ProgressTimeline steps={progressSteps} />
+              <div
+                className="bg-[#d9d9d91a] rounded-t-3xl  backdrop-blur mt-[35vh]"
+                style={{ WebkitBackdropFilter: "blur(8px)" }}
+              >
+                <div className="p-8 min-h-[100%]">
+                  <div className="flex justify-between text-[#312E3E] font-medium">
+                    <a href="/profile" className="underline-offset-2 underline">
+                      My Impact
+                    </a>
+                    <p
+                      onClick={onClickContribute}
+                      className="underline-offset-2 underline " // align this link to the right
+                    >
+                      Event Information
                     </p>
                   </div>
-                </AppButton>
-              </div>
-              <div className="mt-4">
-                <AppButton
-                  bgColour="bg-white"
-                  className="w-full p-2 px-5 h-32 flex flex-col"
-                >
-                  <p className="text-lg font-header font-bold text-left">
-                    Compare your efforts
-                  </p>
-                  <div className="flex flex-row items-center self-stretch justify-between flex-grow">
-                    <div>
-                      <p className="text-xl">
-                        Great Job! <br />
-                        Top 15%
-                      </p>
-                    </div>
-
-                    <EffortGraph />
+                  <div className="flex justify-between mt-4 text-base">
+                    <AppButton
+                      bgColour="bg-white"
+                      className="w-full mr-3 p-2 "
+                      onClick={onClickShare}
+                    >
+                      <div className="flex flex-col items-center">
+                        <p>Share</p>
+                        <ShareIcon className="h-12 w-12 mt-1" />
+                      </div>
+                    </AppButton>
+                    <AppButton
+                      className="w-full ml-3 p-2"
+                      onClick={() => router.push(routes.story.takePhoto)}
+                    >
+                      <div className="flex flex-col items-center">
+                        <p>Contribute</p>
+                        <CameraIcon className="h-12 w-12 mt-1" />
+                      </div>
+                    </AppButton>
                   </div>
-                </AppButton>
-              </div>
-              <p className="font-header font-semibold text-xl mt-4">
-                Food for Thought
-              </p>
-              <div className="overflow-x-auto">
-                <div className="flex w-fit mt-2">
-                  {foodForThought.map((item) => (
-                    <InfoTile
-                      key={item.id}
-                      imageUrl={item.imageUrl}
-                      link={item.link}
-                    />
-                  ))}
+                  <div className="mt-4">
+                    <AppButton
+                      bgColour="bg-white"
+                      className="w-full p-2 px-5 h-32 flex flex-col text-sm"
+                    >
+                      <p className="text-lg font-header font-bold text-left">
+                        {event?.name}
+                      </p>
+                      <p className="float-right text-right self-stretch">
+                        {getDaysLeft()} days left
+                      </p>
+                      <ProgressBar progress={getProgress()} />
+                      <div className="flex justify-between self-stretch">
+                        <p>{event?.attempt.assets.length}</p>
+                        <p className="">
+                          Target: {event?.requiredAssets} contributions
+                        </p>
+                      </div>
+                    </AppButton>
+                  </div>
+                  <div className="mt-4">
+                    <AppButton
+                      bgColour="bg-white"
+                      className="w-full p-2 px-5 h-32 flex flex-col"
+                    >
+                      <p className="text-lg font-header font-bold text-left">
+                        Compare your efforts
+                      </p>
+                      <div className="flex flex-row items-center self-stretch justify-between flex-grow">
+                        <div>
+                          <p className="text-xl">
+                            Great Job! <br />
+                            Top 15%
+                          </p>
+                        </div>
+
+                        <EffortGraph />
+                      </div>
+                    </AppButton>
+                  </div>
+                  <p className="font-header font-semibold text-xl mt-4">
+                    Food for Thought
+                  </p>
+                  <div className="overflow-x-auto">
+                    <div className="flex w-fit mt-2">
+                      {foodForThought.map((item) => (
+                        <InfoTile
+                          key={item.id}
+                          imageUrl={item.imageUrl}
+                          link={item.link}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        redirectToVote();
+                      }}
+                      className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
+                    >
+                      {demo.ids
+                        .map((x) => x.toString())
+                        .indexOf(event?.id.toString() || "0") +
+                        2 >
+                      demo.ids.length - 1
+                        ? "Restart"
+                        : "Try out the next event!"}
+
+                      <span className="text-red-400 ml-1">(Demo)</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div>
-                <button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    redirectToVote();
-                  }}
-                  className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
-                >
-                  {demo.ids
-                    .map((x) => x.toString())
-                    .indexOf(event?.id.toString() || "0") +
-                    2 >
-                  demo.ids.length - 1
-                    ? "Restart"
-                    : "Try out the next event!"}
-
-                  <span className="text-red-400 ml-1">(Demo)</span>
-                </button>
-              </div>
             </div>
-          </div>
-        </div>
-      </IonContent>
-    </IonPage>
+          </IonContent>
+        </IonPage>
+      )}
+    </>
   );
 };
 
