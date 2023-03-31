@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   IonPage,
   IonHeader,
@@ -11,7 +11,7 @@ import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 
 import gameImg from "@/assets/game/gameImg.png";
 import AppButton from "@/components/AppButton";
-import ProgressTimeline from "@/components/ProgressTimeline";
+import ProgressTimeline, { Step } from "@/components/ProgressTimeline";
 import ProgressBar from "@/components/ProgressBar";
 import EffortGraph from "@/components/EffortGraph";
 import InfoTile from "@/components/InfoTile";
@@ -22,6 +22,7 @@ import StoryService, { StoryData } from "@/api/Story/StoryService";
 import { Share } from "@capacitor/share";
 import { dialogAtom } from "@/utils/atoms/dialog";
 import { useRecoilState } from "recoil";
+import AttemptService from "@/api/Attempt/AttemptService";
 
 const foodForThought = [
   {
@@ -59,6 +60,7 @@ const Game = () => {
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setDialogState] = useRecoilState(dialogAtom);
+  const [progressSteps, setProgressSteps] = useState<Step[]>([]);
 
   const [getCurrentEvent] = useApi(
     () => EventService.getCurrentEvents(),
@@ -73,17 +75,53 @@ const Game = () => {
     false,
     false
   );
+
+  const [getEventById] = useApi(
+    (id: number) => EventService.getEventById(id),
+    false,
+    false,
+    false
+  );
+
+  const [createAttempt] = useApi(
+    (eventId: number) => AttemptService.createAttempt(eventId),
+    false,
+    false,
+    false
+  );
+
   const [event, setEvent] = useState<EventData>();
   const [story, setStory] = useState<StoryData>();
+  const location = useLocation();
+
+  const isMockRoute = location.pathname.split("/").length >= 4;
 
   const getData = async () => {
-    const currentEvent = await getCurrentEvent();
-    if (currentEvent && currentEvent.data) {
-      setEvent(currentEvent.data);
-    }
-    const currentStory = await getCurrentStory();
-    if (currentStory && currentStory.data) {
-      setStory(currentStory.data);
+    if (!isMockRoute) {
+      const [currentEvent, currentStory] = await Promise.all([
+        getCurrentEvent(),
+        getCurrentStory(),
+      ]);
+      if (currentEvent && currentEvent.data) {
+        setEvent(currentEvent.data);
+      }
+      if (currentStory && currentStory.data) {
+        setStory(currentStory.data);
+      }
+    } else {
+      const id = location.pathname.split("/")[3];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [currentStory, _] = await Promise.all([
+        getCurrentStory(),
+        createAttempt(id),
+      ]);
+      const currentEvent = await getEventById(id);
+      if (currentEvent && currentEvent.data) {
+        setEvent(currentEvent.data);
+      }
+      if (currentStory && currentStory.data) {
+        setStory(currentStory.data);
+      }
     }
   };
 
@@ -98,7 +136,9 @@ const Game = () => {
 
   const getProgress = () => {
     if (event) {
-      return (event.attempt.assets.length / event.requiredAssets) * 100;
+      const progress =
+        (event.attempt.assets.length / event.requiredAssets) * 100;
+      return progress > 100 ? 100 : progress;
     }
     return 0;
   };
@@ -135,28 +175,47 @@ const Game = () => {
   const onClickContribute = () => {
     setDialogState({
       isShown: true,
-      title: "Less Paper, More Trees",
-      message:
-        "Deforestation is the major threat to the red pandas' population. Even when forests are only partially cut down, deforestation can still lead to massive population losses for red pandas",
+      title: event?.name || "",
+      message: event?.description || "",
       footer: [
-        "Register for e-statements",
+        "Contribute",
         "Validate Community Posts",
-        "300 Credits",
+        `${event?.reward?.toString() || "0"} Credits`,
       ],
     });
   };
+
+  // construct Steps
+  useEffect(() => {
+    if (!story) return;
+    if (!isMockRoute) return;
+    const id = location.pathname.split("/")[3];
+    const partOfArr = story.partOf;
+    const steps: Step[] = partOfArr.map((part) => {
+      const isCurrent =
+        part.eventOneId === parseInt(id) || part.eventTwoId === parseInt(id);
+      const icon = isCurrent ? "checkmark-circle" : "checkmark-circle-outline";
+      const status = isCurrent
+        ? "current"
+        : parseInt(id) > part.eventOneId
+        ? "complete"
+        : "upcoming";
+      return { name: "", icon, status, href: "#" };
+    });
+    setProgressSteps(steps);
+  }, [isMockRoute, location.pathname, story]);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar mode="ios">
-          <IonTitle className="font-body">Game tool</IonTitle>
+          <IonTitle className="font-body">{event?.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <div className=" h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
           <img className="w-full absolute top-0" src={gameImg} alt="test" />
-          <ProgressTimeline />
+          <ProgressTimeline steps={progressSteps} />
           <div
             className="bg-[#d9d9d91a] rounded-t-3xl  backdrop-blur mt-[35vh]"
             style={{ WebkitBackdropFilter: "blur(8px)" }}
@@ -170,7 +229,7 @@ const Game = () => {
                   onClick={onClickContribute}
                   className="underline-offset-2 underline " // align this link to the right
                 >
-                  How to Contribute?
+                  Event Information
                 </p>
               </div>
               <div className="flex justify-between mt-4 text-base">
@@ -258,6 +317,7 @@ const Game = () => {
                   className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
                 >
                   Try out the next event!
+                  <span className="text-red-400 ml-1">(Demo)</span>
                 </button>
               </div>
             </div>

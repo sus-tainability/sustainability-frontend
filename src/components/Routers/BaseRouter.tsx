@@ -102,7 +102,7 @@ const BaseRouter = () => {
             <IonTabBar
               selectedTab="profile"
               mode="ios"
-              className="py-1"
+              className="pt-2 pb-5"
               slot="bottom"
             >
               <IonTabButton tab="story" href={routes.story.base}>
