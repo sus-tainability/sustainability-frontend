@@ -123,10 +123,11 @@ const Verification: React.FC = () => {
               {verificationAssets[currentIndex]?.validationText}
             </IonText>
 
-            <div className="w-full h-fit min-h-[200px] rounded-xl bg-white">
+            <div className="w-[100%] aspect-1 min-h-[200px] rounded-xl bg-white">
               <img
                 src={verificationAssets[currentIndex]?.imageUrl}
                 alt="verify_image"
+                className="w-full h-full rounded-xl object-cover"
               />
             </div>
 
