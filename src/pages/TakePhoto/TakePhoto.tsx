@@ -12,7 +12,7 @@ import { useIonRouter } from "@ionic/react";
 const TakePhoto = () => {
   const router = useIonRouter();
   const [photo, setPhoto] = useRecoilState(photoAtom);
-  const [demo, _] = useRecoilState(demoAtom);
+  const [demo] = useRecoilState(demoAtom);
   const [, setToasterState] = useRecoilState(toasterAtom);
 
   const takePhotoHandler = async () => {
