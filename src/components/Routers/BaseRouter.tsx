@@ -80,8 +80,9 @@ const BaseRouter = () => {
             <IonRouterOutlet animated={true} mode="ios">
               <Route exact path={routes.story.base} component={Home} />
               <Route exact path={routes.profile.base} component={Profile} />
+              <Route exact path={routes.story.mockGame} component={Game} />
+              <Route exact path={routes.story.mockVote} component={Game} />
               <Route exact path={routes.story.game} component={Game} />
-              <Route exact path={"/test/game"} component={GameTest} />
               <Route
                 exact
                 path={routes.story.takePhoto}
