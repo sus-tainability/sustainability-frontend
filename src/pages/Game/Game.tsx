@@ -87,6 +87,10 @@ const Game = () => {
     }
   };
 
+  const redirectToVote = () => {
+    history.push("/story/vote");
+  };
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,6 +247,18 @@ const Game = () => {
                     />
                   ))}
                 </div>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    redirectToVote();
+                  }}
+                  className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
+                >
+                  Try out the next event!
+                </button>
               </div>
             </div>
           </div>

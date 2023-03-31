@@ -19,6 +19,8 @@ import { useApi } from "@/api/ApiHandler";
 import EventService from "@/api/Event/EventService";
 
 import voteImg from "@/assets/voteImg.png";
+import { routes } from "@/constants/routes";
+import { useHistory } from "react-router";
 
 const Vote = () => {
   const [currentEvents, setCurrentEvents] = useState<PartOfWithEvents>();
@@ -91,6 +93,12 @@ const Vote = () => {
     }
   }, [currentEvents, currentEvents?.startDate]);
 
+  const history = useHistory();
+
+  const redirectToGame = () => {
+    history.push(routes.story.game);
+  };
+
   return (
     <>
       {isLoading && <LoadingPage />}
@@ -147,12 +155,12 @@ const Vote = () => {
                             </div>
 
                             <div
-                              style={{ height: `${100 - 50}%` }}
+                              style={{ height: `${isOptionOne ? 52 : 48}%` }}
                               className={`absolute py-2 bottom-0 flex items-center justify-center
                               w-full greenGradient rounded origin-bottom animate-grow`}
                             >
                               <p className="font-bold font-header text-4xl animate-fadeIn">
-                                50%
+                                {isOptionOne ? "52%" : "48%"}
                               </p>
                             </div>
                           </>
@@ -186,18 +194,31 @@ const Vote = () => {
                             </div>
 
                             <div
-                              style={{ height: `${100 - 50}%` }}
+                              style={{ height: `${isOptionTwo ? 52 : 48}%` }}
                               className={`absolute py-2 bottom-0 flex items-center justify-center
                               w-full greenGradient rounded origin-bottom animate-grow`}
                             >
                               <p className="font-bold font-header text-4xl animate-fadeIn">
-                                50%
+                                {isOptionTwo ? "52%" : "48%"}
                               </p>
                             </div>
                           </>
                         )}
                       </div>
                     </AppButton>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        redirectToGame();
+                      }}
+                      className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
+                    >
+                      Proceed to the Game
+                      <span className="text-red-400 ml-1">(Demo)</span>
+                    </button>
                   </div>
                 </div>
               </InformationFooter>
