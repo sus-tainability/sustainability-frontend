@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IonContent, IonPage, IonText } from "@ionic/react";
+import { IonContent, IonPage, IonText, useIonRouter } from "@ionic/react";
 
 import AppButton from "@/components/AppButton";
 import AssetService, {
@@ -15,17 +15,19 @@ import { ReactComponent as TickIcon } from "@/assets/verification/tick.svg";
 import { useApi } from "@/api/ApiHandler";
 import { photoAtom } from "@/utils/atoms/photo";
 import EventService from "@/api/Event/EventService";
-import { useHistory } from "react-router";
 import { routes } from "@/constants/routes";
+import { demoAtom } from "@/utils/atoms/demo";
 
 const Verification: React.FC = () => {
+  const router = useIonRouter();
   const [verificationAssets, setVerificationAssets] = useState<PendingAsset[]>(
     []
   );
-  const history = useHistory();
   const [photoState] = useRecoilState(photoAtom);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [attemptId, setAttemptId] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [demo, _] = useRecoilState(demoAtom);
   const [getEventById] = useApi(
     (id: number) => EventService.getEventById(id),
     false,
@@ -46,15 +48,15 @@ const Verification: React.FC = () => {
   );
   const [validateImageAsset] = useApi(
     (id: number) => AssetService.validateImageAsset(id),
-    false,
-    false,
-    false
+    true,
+    true,
+    true
   );
   const [rejectImageAsset] = useApi(
     (id: number) => AssetService.rejectImageAsset(id),
-    false,
-    false,
-    false
+    true,
+    true,
+    true
   );
 
   const getData = async () => {
@@ -93,18 +95,24 @@ const Verification: React.FC = () => {
     } else {
       setCurrentIndex(0);
       await createAsset();
-      history.push(routes.story.game);
+      const base = routes.story.base;
+      const game = `${base}/game/${demo.ids[demo.pointer][0]}`;
+      router.push(game, "none", "replace");
     }
   };
 
   const userValidateOnClick = async () => {
-    await validateImageAsset(verificationAssets[currentIndex].id);
-    await nextImage();
+    await Promise.all([
+      validateImageAsset(verificationAssets[currentIndex].id),
+      nextImage(),
+    ]);
   };
 
   const userRejectOnClick = async () => {
-    await rejectImageAsset(verificationAssets[currentIndex].id);
-    await nextImage();
+    await Promise.all([
+      rejectImageAsset(verificationAssets[currentIndex].id),
+      nextImage(),
+    ]);
   };
 
   return (
