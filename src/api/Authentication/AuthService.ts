@@ -22,15 +22,6 @@ interface LoginData {
   user: UserData;
 }
 
-interface PhotoData {
-  path: string | undefined;
-  preview: string;
-}
-
-export interface PhotoState {
-  takenPhoto: PhotoData | null;
-}
-
 export interface VerificationData {
   imageId: number;
   imageUrl: string;
