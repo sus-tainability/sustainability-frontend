@@ -11,7 +11,7 @@ import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 
 import gameImg from "@/assets/game/gameImg.png";
 import AppButton from "@/components/AppButton";
-import ProgressTimeline from "@/components/ProgressTimeline";
+import ProgressTimeline, { Step } from "@/components/ProgressTimeline";
 import ProgressBar from "@/components/ProgressBar";
 import EffortGraph from "@/components/EffortGraph";
 import InfoTile from "@/components/InfoTile";
@@ -60,6 +60,7 @@ const Game = () => {
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setDialogState] = useRecoilState(dialogAtom);
+  const [progressSteps, setProgressSteps] = useState<Step[]>([]);
 
   const [getCurrentEvent] = useApi(
     () => EventService.getCurrentEvents(),
@@ -184,6 +185,26 @@ const Game = () => {
     });
   };
 
+  // construct Steps
+  useEffect(() => {
+    if (!story) return;
+    if (!isMockRoute) return;
+    const id = location.pathname.split("/")[3];
+    const partOfArr = story.partOf;
+    const steps: Step[] = partOfArr.map((part) => {
+      const isCurrent =
+        part.eventOneId === parseInt(id) || part.eventTwoId === parseInt(id);
+      const icon = isCurrent ? "checkmark-circle" : "checkmark-circle-outline";
+      const status = isCurrent
+        ? "current"
+        : parseInt(id) > part.eventOneId
+        ? "complete"
+        : "upcoming";
+      return { name: "", icon, status, href: "#" };
+    });
+    setProgressSteps(steps);
+  }, [isMockRoute, location.pathname, story]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -194,7 +215,7 @@ const Game = () => {
       <IonContent>
         <div className=" h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
           <img className="w-full absolute top-0" src={gameImg} alt="test" />
-          <ProgressTimeline />
+          <ProgressTimeline steps={progressSteps} />
           <div
             className="bg-[#d9d9d91a] rounded-t-3xl  backdrop-blur mt-[35vh]"
             style={{ WebkitBackdropFilter: "blur(8px)" }}
