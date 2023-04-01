@@ -12,7 +12,7 @@ const InfoTile = ({
   return (
     <div className="h-36 w-36 rounded-lg mr-2">
       <a className="relative" href={link}>
-        <div className="absolute bottom-0 bg-[#ffffff75] py-2 rounded-lg font-body font-bold w-full">
+        <div className="absolute bottom-0 bg-[#ffffffcd] py-2 rounded-lg font-body font-bold w-full">
           <p className="text-center w-full">{text}</p>
         </div>
         <img
