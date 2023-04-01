@@ -6,11 +6,13 @@ import { routes } from "@/constants/routes";
 import { useRecoilState } from "recoil";
 import { toasterAtom, ToasterType } from "@/utils/atoms/toaster";
 import { photoAtom } from "@/utils/atoms/photo/atom";
+import { demoAtom } from "@/utils/atoms/demo";
 import { useIonRouter } from "@ionic/react";
 
 const TakePhoto = () => {
   const router = useIonRouter();
   const [photo, setPhoto] = useRecoilState(photoAtom);
+  const [demo] = useRecoilState(demoAtom);
   const [, setToasterState] = useRecoilState(toasterAtom);
 
   const takePhotoHandler = async () => {
@@ -35,11 +37,14 @@ const TakePhoto = () => {
     } catch (err: any) {
       setToasterState({
         title: "Error",
-        message: err.data.message,
+        message: err.message,
         type: ToasterType.ERROR,
         isShown: true,
       });
-      router.push(routes.story.base);
+
+      const base = routes.story.base;
+      const game = `${base}/game/${demo.ids[demo.pointer][0]}`;
+      router.push(game, "none", "replace");
     }
   };
 
