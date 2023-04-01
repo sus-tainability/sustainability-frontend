@@ -30,7 +30,7 @@ export const PhotoLanding: React.FC = () => {
       <IonContent>
         <div className="h-full bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
           <img className="w-full" src={photoLandingImg} alt="background" />
-          <InformationFooter heightOffSet={300}>
+          <InformationFooter>
             <div className="flex flex-col gap-5 p-8">
               <IonText className="text-[36px] text-lightShade font-bold">
                 You are <br />

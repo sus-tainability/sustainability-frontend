@@ -27,37 +27,37 @@ import { useRecoilState } from "recoil";
 import AttemptService from "@/api/Attempt/AttemptService";
 import { demoAtom } from "@/utils/atoms/demo";
 import { demoRoutes } from "@/constants/types";
+import { AssetData } from "@/api/Asset/AssetService";
 
 const foodForThought = [
   {
     id: 1,
-    imageUrl:
-      "https://www.mandai.com/content/dam/wrs/river-safari/animals/red-panda/the-panda-connection.jpg.transform/compress/resize1000/img.jpg",
-    link: "https://www.mandai.com/en/river-wonders/animals-and-zones/red-panda.html",
-  },
-  {
-    id: 2,
+    text: "Red Panda | Species | WWF",
     imageUrl:
       "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
     link: "https://www.worldwildlife.org/species/red-panda",
   },
+
+  {
+    id: 2,
+    text: "10 of the most endangered animals",
+    imageUrl:
+      "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2017-12/Javan_rhino_Ujung_Kulon_NP.jpg?h=3e43625b&itok=KBk1EvwZ",
+    link: "https://www.wwf.org.uk/learn/wildlife/endangered-animals",
+  },
   {
     id: 3,
+    text: "Top 5 Facts About Red Panda",
     imageUrl:
       "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2022-04/_WW187246.jpg?h=485d8330&itok=50jJdB4O",
     link: "https://www.wwf.org.uk/learn/fascinating-facts/red-panda",
   },
   {
     id: 4,
+    text: "Red Panda - River Wonders",
     imageUrl:
       "https://www.mandai.com/content/dam/wrs/river-safari/animals/red-panda/the-panda-connection.jpg.transform/compress/resize1000/img.jpg",
     link: "https://www.mandai.com/en/river-wonders/animals-and-zones/red-panda.html",
-  },
-  {
-    id: 5,
-    imageUrl:
-      "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
-    link: "https://www.worldwildlife.org/species/red-panda",
   },
 ];
 const Game = () => {
@@ -98,6 +98,7 @@ const Game = () => {
   const [demo, setDemo] = useRecoilState(demoAtom);
   const [event, setEvent] = useState<EventData>();
   const [story, setStory] = useState<StoryData>();
+  const [assetData, setAssetData] = useState<AssetData[]>([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -140,6 +141,7 @@ const Game = () => {
       const currentEvent = await getEventById(id);
       if (currentEvent && currentEvent.data) {
         setEvent(currentEvent.data);
+        setAssetData(currentEvent.data.attempt.assets);
       }
       if (currentStory && currentStory.data) {
         setStory(currentStory.data);
@@ -206,8 +208,8 @@ const Game = () => {
       title: event?.name || "",
       message: event?.description || "",
       footer: [
-        "Contribute",
-        "Validate Community Posts",
+        "Contribute Your Own Photos",
+        "Validate Community Photos",
         `${event?.reward?.toString() || "0"} Credits`,
       ],
     });
@@ -323,6 +325,34 @@ const Game = () => {
                     </AppButton>
                   </div>
                   <p className="font-header font-semibold text-xl mt-4">
+                    Your Contributions
+                  </p>
+                  <div className="overflow-x-auto">
+                    <div
+                      className={`flex mt-2 ${
+                        assetData.length > 0 ? "w-fit" : "w-full"
+                      }`}
+                    >
+                      {assetData.length > 0 ? (
+                        assetData.map((asset) => (
+                          <InfoTile
+                            key={asset.id}
+                            text={asset.status}
+                            imageUrl={asset.imgUrl}
+                            link={"#"}
+                          />
+                        ))
+                      ) : (
+                        <div className="w-full">
+                          <p className="text-white font-body italic w-full text-center">
+                            [Contribuite to see your photos here!]
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <p className="font-header font-semibold text-xl mt-4">
                     Food for Thought
                   </p>
                   <div className="overflow-x-auto">
@@ -330,6 +360,7 @@ const Game = () => {
                       {foodForThought.map((item) => (
                         <InfoTile
                           key={item.id}
+                          text={item.text}
                           imageUrl={item.imageUrl}
                           link={item.link}
                         />

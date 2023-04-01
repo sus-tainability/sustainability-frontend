@@ -30,7 +30,7 @@ const Home: React.FC = () => {
       </IonHeader>
       <IonContent>
         <div className="h-full bg-gradient-to-b from-[#582302] to-[#964C1E]">
-          <img className="w-full" src={homeImg} />
+          <img className="w-full absolute top-0" src={homeImg} />
           <InformationFooter>
             <div className="p-8">
               <p className="text-lightShade text-4xl font-header font-bold">

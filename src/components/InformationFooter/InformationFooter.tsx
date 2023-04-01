@@ -9,12 +9,8 @@ const InformationFooter = ({
 }) => {
   return (
     <div
-      style={{
-        height: `calc(100% - ${heightOffSet}px)`,
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-      }}
-      className="bg-[#d9d9d91a] absolute bottom-0 rounded-t-3xl min-h-[450px] w-full overflow-y-auto"
+      className="bg-[#d9d9d91a] rounded-t-3xl  backdrop-blur absolute bottom-0"
+      style={{ WebkitBackdropFilter: "blur(8px)" }}
     >
       {children}
     </div>
