@@ -54,6 +54,8 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
+    "prebuild": "npm run generate-build-version",
+    "generate-build-version": "node generate-build-version",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",

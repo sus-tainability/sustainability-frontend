@@ -4,6 +4,7 @@ import { RecoilRoot } from "recoil";
 import BaseRouter from "./components/Routers/BaseRouter";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
+import CacheBuster from "./components/CacheBuster";
 
 import phoneImg from "./assets/phone.png";
 
@@ -50,27 +51,38 @@ const App: React.FC = () => {
     });
 
   return (
-    <GoogleOAuthProvider clientId={client_id}>
-      <RecoilRoot>
-        {showSwapOrientation && (
-          <div
-            style={{
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-            }}
-            className="z-30 w-full h-full absolute flex justify-center items-center"
-          >
-            <div className="w-80 h-56 rounded-lg bg-white flex flex-col justify-center items-center font-body">
-              <img className="w-28" src={phoneImg} />
-              <p className="mt-3">Rotate Your Phone to Portrait Mode</p>
-            </div>
-          </div>
-        )}
-        <BaseRouter />
-        <Toaster />
-        <DialogCard />
-      </RecoilRoot>
-    </GoogleOAuthProvider>
+    <CacheBuster>
+      {(isLoading, isLatestVersion, refreshCacheAndReload) => {
+        if (isLoading) return null;
+        if (!isLoading && !isLatestVersion) {
+          refreshCacheAndReload();
+        }
+
+        return (
+          <GoogleOAuthProvider clientId={client_id}>
+            <RecoilRoot>
+              {showSwapOrientation && (
+                <div
+                  style={{
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                  }}
+                  className="z-30 w-full h-full absolute flex justify-center items-center"
+                >
+                  <div className="w-80 h-56 rounded-lg bg-white flex flex-col justify-center items-center font-body">
+                    <img className="w-28" src={phoneImg} />
+                    <p className="mt-3">Rotate Your Phone to Portrait Mode</p>
+                  </div>
+                </div>
+              )}
+              <BaseRouter />
+              <Toaster />
+              <DialogCard />
+            </RecoilRoot>
+          </GoogleOAuthProvider>
+        );
+      }}
+    </CacheBuster>
   );
 };
 

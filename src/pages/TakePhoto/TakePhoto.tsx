@@ -42,8 +42,7 @@ const TakePhoto = () => {
         isShown: true,
       });
 
-      const base = routes.story.base;
-      const game = `${base}/game/${demo.ids[demo.pointer][0]}`;
+      const game = demo.history[demo.history.length - 1];
       router.push(game, "none", "replace");
     }
   };
