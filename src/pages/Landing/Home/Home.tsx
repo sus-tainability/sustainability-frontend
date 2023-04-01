@@ -45,13 +45,12 @@ const Home: React.FC = () => {
                 onClick={() => {
                   setHasJoined(true);
                   const base = `${routes.story.base}`;
+                  const history = demo.history.filter((x) => x !== "/story");
                   const nextUrl =
-                    demo.ids[demo.pointer].length === 2
-                      ? `${base}/vote/${demo.ids[demo.pointer][0]}/${
-                          demo.ids[demo.pointer][1]
-                        }`
-                      : `${base}/game/${demo.ids[demo.pointer][0]}`;
-                  router.push(nextUrl.trim(), "forward", "replace");
+                    history.length === 0
+                      ? `${base}/vote/2/3`
+                      : history[history.length - 1];
+                  router.push(nextUrl, "forward", "replace");
                 }}
                 className="py-4 px-10 mt-8"
               >

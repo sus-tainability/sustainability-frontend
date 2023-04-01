@@ -1,14 +1,16 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 interface DemoState {
-  pointer: number;
-  ids: number[][];
+  history: string[];
 }
 
 export const demoAtom = atom<DemoState>({
   key: "demoAtom",
   default: {
-    pointer: 0,
-    ids: [[2, 3], [2], [3], [4, 5], [4], [5], [6, 7], [6], [7]],
+    history: [],
   },
+  effects_UNSTABLE: [persistAtom],
 });

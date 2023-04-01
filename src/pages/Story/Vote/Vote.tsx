@@ -89,6 +89,18 @@ const Vote = () => {
   }, []);
 
   useEffect(() => {
+    const pathName = location.pathname;
+    const newHistory = [...demo.history, pathName].filter(
+      (x) => x !== "/story"
+    );
+    if (newHistory.length > 5) {
+      newHistory.shift();
+    }
+    setDemo((prev) => ({ ...prev, history: newHistory }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (currentEvents) {
       setInterval(() => {
         const eventTime = moment(currentEvents.startDate);
@@ -100,10 +112,6 @@ const Vote = () => {
 
   const redirectToGame = () => {
     const route = `${routes.story.base}/game/${nextId}`;
-    const newPointer = demo.ids.find(
-      (id) => id[0] === nextId && id.length === 1
-    );
-    setDemo((prev) => ({ ...prev, pointer: newPointer ? newPointer[0] : 0 }));
     router.push(route, "forward", "replace");
   };
 

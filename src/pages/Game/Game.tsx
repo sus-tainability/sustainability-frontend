@@ -26,6 +26,7 @@ import { dialogAtom } from "@/utils/atoms/dialog";
 import { useRecoilState } from "recoil";
 import AttemptService from "@/api/Attempt/AttemptService";
 import { demoAtom } from "@/utils/atoms/demo";
+import { demoRoutes } from "@/constants/types";
 
 const foodForThought = [
   {
@@ -94,10 +95,23 @@ const Game = () => {
     false
   );
 
-  const [demo, setDemoState] = useRecoilState(demoAtom);
+  const [demo, setDemo] = useRecoilState(demoAtom);
   const [event, setEvent] = useState<EventData>();
   const [story, setStory] = useState<StoryData>();
   const location = useLocation();
+
+  useEffect(() => {
+    const pathName = location.pathname;
+    const newHistory = [...demo.history, pathName].filter(
+      (x) => x !== "/story"
+    );
+
+    if (newHistory.length > 5) {
+      newHistory.shift();
+    }
+    setDemo((prev) => ({ ...prev, history: newHistory }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isMockRoute = location.pathname.split("/").length >= 4;
 
@@ -135,23 +149,11 @@ const Game = () => {
   };
 
   const redirectToVote = () => {
-    const p = demo.pointer;
-    console.log(p);
-    const newPointer =
-      p + 2 > demo.ids.length - 2
-        ? 0
-        : demo.ids[p + 1].length === 2
-        ? p + 1
-        : p + 2;
-    console.log(newPointer);
-    setDemoState((prev) => ({ ...prev, pointer: newPointer }));
-    if (newPointer === 0) {
-      router.push(routes.story.base, "forward", "replace");
-      return;
+    if (!event) return;
+    const url = demoRoutes.get(event.id.toString()) || "";
+    if (url === "/story") {
+      setDemo((prev) => ({ ...prev, history: [] }));
     }
-
-    const nextIds = demo.ids[newPointer];
-    const url = `${routes.story.base}/vote/${nextIds[0]}/${nextIds[1]}`;
     router.push(url);
   };
 
@@ -335,24 +337,22 @@ const Game = () => {
                     </div>
                   </div>
                   <div>
-                    <button
-                      type="submit"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        redirectToVote();
-                      }}
-                      className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
-                    >
-                      {demo.ids
-                        .map((x) => x.toString())
-                        .indexOf(event?.id.toString() || "0") +
-                        2 >
-                      demo.ids.length - 1
-                        ? "Restart"
-                        : "Try out the next event!"}
+                    {event && (
+                      <button
+                        type="submit"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          redirectToVote();
+                        }}
+                        className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
+                      >
+                        {demoRoutes.get(event.id.toString()) === "/story"
+                          ? "Restart"
+                          : "Try out the next event!"}
 
-                      <span className="text-red-400 ml-1">(Demo)</span>
-                    </button>
+                        <span className="text-red-400 ml-1">(Demo)</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

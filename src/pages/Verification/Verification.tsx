@@ -102,7 +102,7 @@ const Verification: React.FC = () => {
       await createAsset();
       setIsLoading(false);
       const base = routes.story.base;
-      const game = `${base}/game/${demo.ids[demo.pointer][0]}`;
+      const game = `${base}/game/${photoState.eventId}`;
       router.push(game, "none", "replace");
     }
   };

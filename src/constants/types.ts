@@ -1,3 +1,12 @@
+export const demoRoutes = new Map<string, string>([
+  ["2", "/story/vote/4/5"],
+  ["3", "/story/vote/4/5"],
+  ["4", "/story/vote/6/7"],
+  ["5", "/story/vote/6/7"],
+  ["6", "/story"],
+  ["7", "/story"],
+]);
+
 export type PartOfWithEvents = {
   id: number;
   eventOneId: number;
