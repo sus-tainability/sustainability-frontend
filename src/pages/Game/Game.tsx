@@ -339,7 +339,6 @@ const Game = () => {
                             key={asset.id}
                             text={asset.status}
                             imageUrl={asset.imgUrl}
-                            link={"#"}
                           />
                         ))
                       ) : (
