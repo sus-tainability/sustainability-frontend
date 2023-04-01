@@ -20,11 +20,13 @@ const InfoTile = ({
           />
         </a>
       )}
-      <img
-        className="object-cover h-36 w-36 rounded-lg"
-        src={imageUrl}
-        alt=""
-      />
+      {!link && (
+        <img
+          className="object-cover h-36 w-36 rounded-lg"
+          src={imageUrl}
+          alt=""
+        />
+      )}
       <div className="bg-[#ffffffcd] absolute bottom-0 z-30 py-2 rounded-lg font-body font-bold w-full">
         <p className="text-center w-full">{text}</p>
       </div>
