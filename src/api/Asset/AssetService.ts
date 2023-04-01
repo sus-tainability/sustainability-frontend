@@ -1,5 +1,6 @@
 import ApiService, { ApiData } from "@/api/ApiService";
 import { PhotoState } from "@/utils/atoms/photo/atom";
+import { v4 as uuidv4 } from "uuid";
 
 export type AssetData = {
   id: number;
@@ -38,7 +39,7 @@ export default class AssetService {
     const formData = new FormData();
     const res = await fetch(createImageAssetData.photoData.takenPhoto.preview);
     const blob = await res.blob();
-    formData.append("file", blob, "filename.jpg");
+    formData.append("file", blob, `${uuidv4()}.jpg`);
 
     formData.append("attemptId", createImageAssetData.attemptId.toString());
     try {
