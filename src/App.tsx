@@ -4,6 +4,7 @@ import { RecoilRoot } from "recoil";
 import BaseRouter from "./components/Routers/BaseRouter";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CacheBuster from "./components/CacheBuster";
 
 import phoneImg from "./assets/phone.png";
@@ -38,6 +39,7 @@ const App: React.FC = () => {
   const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
   const [showSwapOrientation, setShowSwapOrientation] = useState(!isPortrait);
+  const queryClient = new QueryClient();
 
   window
     .matchMedia("(orientation: portrait)")
@@ -60,25 +62,27 @@ const App: React.FC = () => {
 
         return (
           <GoogleOAuthProvider clientId={client_id}>
-            <RecoilRoot>
-              {showSwapOrientation && (
-                <div
-                  style={{
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                  }}
-                  className="z-30 w-full h-full absolute flex justify-center items-center"
-                >
-                  <div className="w-80 h-56 rounded-lg bg-white flex flex-col justify-center items-center font-body">
-                    <img className="w-28" src={phoneImg} />
-                    <p className="mt-3">Rotate Your Phone to Portrait Mode</p>
+            <QueryClientProvider client={queryClient}>
+              <RecoilRoot>
+                {showSwapOrientation && (
+                  <div
+                    style={{
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                    }}
+                    className="z-30 w-full h-full absolute flex justify-center items-center"
+                  >
+                    <div className="w-80 h-56 rounded-lg bg-white flex flex-col justify-center items-center font-body">
+                      <img className="w-28" src={phoneImg} />
+                      <p className="mt-3">Rotate Your Phone to Portrait Mode</p>
+                    </div>
                   </div>
-                </div>
-              )}
-              <BaseRouter />
-              <Toaster />
-              <DialogCard />
-            </RecoilRoot>
+                )}
+                <BaseRouter />
+                <Toaster />
+                <DialogCard />
+              </RecoilRoot>
+            </QueryClientProvider>
           </GoogleOAuthProvider>
         );
       }}
