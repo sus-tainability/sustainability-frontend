@@ -64,8 +64,8 @@ const Home: React.FC = () => {
               <p className="text-3xl font-header text-center pt-10 pb-5 font-bold">
                 Psst! Hey did you know you could install this application?
               </p>
-              <img src={howToInstall} className="w-3/4 py-5" />
-              <div className="relative flex items-start">
+              <img src={howToInstall} className="w-3/4 pb-5" />
+              <div className="relative flex items-start pb-5">
                 <div className="flex h-6 items-center">
                   <input
                     id="comments"
