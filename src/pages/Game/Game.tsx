@@ -47,7 +47,7 @@ const foodForThought = [
   },
   {
     id: 3,
-    text: "Top 5 Facts About Red Panda",
+    text: "Top 5 Red Panda Facts",
     imageUrl:
       "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2022-04/_WW187246.jpg?h=485d8330&itok=50jJdB4O",
     link: "https://www.wwf.org.uk/learn/fascinating-facts/red-panda",
@@ -344,7 +344,7 @@ const Game = () => {
                       ) : (
                         <div className="w-full">
                           <p className="text-white font-body italic w-full text-center">
-                            [Contribuite to see your photos here!]
+                            [Contribute to see your photos here!]
                           </p>
                         </div>
                       )}

@@ -37,9 +37,8 @@ const Home: React.FC = () => {
                 The Red Pandas invites you...
               </p>
               <p className="mt-8 text-lightShade font-body">
-                Save these furry friends from extinction. Complete daily tasks,
-                protect the endangered species, and promote a sustainable
-                future.
+                Complete daily tasks, protect endangered species, and promote a
+                sustainable future.
               </p>
               <AppButton
                 onClick={() => {
