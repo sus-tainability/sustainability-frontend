@@ -64,7 +64,7 @@ const Home: React.FC = () => {
               <p className="text-3xl font-header text-center pt-10 pb-5 font-bold">
                 Psst! Hey did you know you could install this application?
               </p>
-              <img src={howToInstall} className="w-3/4 pb-5" />
+              <img src={howToInstall} className="w-[65%] pb-5" />
               <div className="relative flex items-start pb-5">
                 <div className="flex h-6 items-center">
                   <input
@@ -88,6 +88,7 @@ const Home: React.FC = () => {
             </div>
           </IonContent>
         </IonModal>
+
         <div className="h-full bg-gradient-to-b from-[#582302] to-[#964C1E]">
           <img className="w-full absolute top-0" src={homeImg} />
           <InformationFooter>
