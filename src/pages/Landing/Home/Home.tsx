@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import {
-  IonAlert,
+  IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
+  IonModal,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -16,23 +18,29 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { demoAtom } from "@/utils/atoms/demo";
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
+import howToInstall from "@/assets/howtoinstall-ios.gif";
 
 const Home: React.FC = () => {
   const router = useIonRouter();
   const [hasJoined, setHasJoined] = useLocalStorage("hasJoined", false);
+  const [dontShowAgain, setDontShowAgain] = useLocalStorage(
+    "dontShowAgain",
+    false
+  );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [demo, _] = useRecoilState(demoAtom);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    let displayMode = "browser tab";
+    // if PWA is not installed, show modal
     if (window.matchMedia("(display-mode: standalone)").matches) {
-      displayMode = "standalone";
-      setIsOpen(true);
+      return;
     }
-    // Log launch display mode to analytics
-    console.log("DISPLAY_MODE_LAUNCH:", displayMode);
-  }, []);
+    if (dontShowAgain) {
+      return;
+    }
+    setIsOpen(true);
+  }, [dontShowAgain]);
 
   return (
     <IonPage>
@@ -42,14 +50,44 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonAlert
-          isOpen={isOpen}
-          header="PWA"
-          subHeader="Important message"
-          message="This is a PWA"
-          buttons={["OK"]}
-          onDidDismiss={() => setIsOpen(false)}
-        ></IonAlert>
+        <IonModal id="image-preview-modal" isOpen={isOpen}>
+          <IonContent>
+            <IonToolbar className="font-body" mode="ios">
+              <IonTitle>Install App</IonTitle>
+              <IonButtons slot="end">
+                <IonButton mode="ios" onClick={() => setIsOpen(false)}>
+                  Close
+                </IonButton>
+              </IonButtons>
+            </IonToolbar>
+            <div className="w-full px-10 flex flex-col items-center">
+              <p className="text-3xl font-header text-center pt-10 pb-5 font-bold">
+                Psst! Hey did you know you could install this application?
+              </p>
+              <img src={howToInstall} className="w-3/4 py-5" />
+              <div className="relative flex items-start">
+                <div className="flex h-6 items-center">
+                  <input
+                    id="comments"
+                    aria-describedby="comments-description"
+                    name="comments"
+                    type="checkbox"
+                    checked={dontShowAgain}
+                    onChange={(e) => {
+                      setDontShowAgain(e.target.checked);
+                    }}
+                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                </div>
+                <div className="ml-3 text-sm leading-6">
+                  <label htmlFor="comments" className="text-gray-900 font-body">
+                    Don't Show This Again
+                  </label>
+                </div>
+              </div>
+            </div>
+          </IonContent>
+        </IonModal>
         <div className="h-full bg-gradient-to-b from-[#582302] to-[#964C1E]">
           <img className="w-full absolute top-0" src={homeImg} />
           <InformationFooter>
