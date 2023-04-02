@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import {
+  IonAlert,
   IonContent,
   IonHeader,
   IonPage,
@@ -14,12 +15,24 @@ import { routes } from "@/constants/routes";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { demoAtom } from "@/utils/atoms/demo";
 import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
   const router = useIonRouter();
   const [hasJoined, setHasJoined] = useLocalStorage("hasJoined", false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [demo, _] = useRecoilState(demoAtom);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    let displayMode = "browser tab";
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      displayMode = "standalone";
+      setIsOpen(true);
+    }
+    // Log launch display mode to analytics
+    console.log("DISPLAY_MODE_LAUNCH:", displayMode);
+  }, []);
 
   return (
     <IonPage>
@@ -29,6 +42,14 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonAlert
+          isOpen={isOpen}
+          header="PWA"
+          subHeader="Important message"
+          message="This is a PWA"
+          buttons={["OK"]}
+          onDidDismiss={() => setIsOpen(false)}
+        ></IonAlert>
         <div className="h-full bg-gradient-to-b from-[#582302] to-[#964C1E]">
           <img className="w-full absolute top-0" src={homeImg} />
           <InformationFooter>
