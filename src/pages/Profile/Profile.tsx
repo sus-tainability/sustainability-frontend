@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import {
+  IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonPage,
+  IonPopover,
   IonText,
   IonTitle,
   IonToolbar,
@@ -19,9 +23,12 @@ import { ReactComponent as LifeWaterIcon } from "@/assets/profile/lifeBelowWater
 import useAsync from "@/hooks/useAsync";
 import { useApi } from "@/api/ApiHandler";
 import UserService from "@/api/User/UserService";
+import AuthService from "@/api/Authentication/AuthService";
 
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/utils/atoms/user/atom";
+import { ellipsisHorizontal } from "ionicons/icons";
+import AppButton from "@/components/AppButton/AppButton";
 
 const Profile: React.FC = () => {
   const [user, setUser] = useRecoilState(userAtom);
@@ -41,10 +48,29 @@ const Profile: React.FC = () => {
     }
   }, [setUser, status, value]);
 
+  const handleLogout = () => {
+    AuthService.logout();
+    window.location.reload();
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar mode="ios">
+          <IonButtons slot="primary">
+            <IonButton id="click-trigger">
+              <IonIcon
+                slot="icon-only"
+                ios={ellipsisHorizontal}
+                md={ellipsisHorizontal}
+              ></IonIcon>
+            </IonButton>
+          </IonButtons>
+          <IonPopover mode="ios" trigger="click-trigger" triggerAction="click">
+            <AppButton className="w-full py-3" onClick={handleLogout}>
+              Log Out
+            </AppButton>
+          </IonPopover>
           <IonTitle className="font-body">My Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
