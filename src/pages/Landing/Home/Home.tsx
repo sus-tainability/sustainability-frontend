@@ -94,7 +94,7 @@ const Home: React.FC = () => {
           <InformationFooter>
             <div className="p-8">
               <p className="text-lightShade text-4xl font-header font-bold">
-                The Red Pandas invites you...
+                The Red Pandas invite you...
               </p>
               <p className="mt-8 text-lightShade font-body">
                 Complete daily tasks, protect endangered species, and promote a
