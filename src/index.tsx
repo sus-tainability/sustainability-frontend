@@ -5,9 +5,12 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import "./theme/global.css";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
+import ReactGA from "react-ga";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
+ReactGA.initialize("UA-262836784-1");
+
 root.render(
   <React.StrictMode>
     <App />

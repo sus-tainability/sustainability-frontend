@@ -28,6 +28,7 @@ import AttemptService from "@/api/Attempt/AttemptService";
 import { demoAtom } from "@/utils/atoms/demo";
 import { demoRoutes } from "@/constants/types";
 import { AssetData } from "@/api/Asset/AssetService";
+import ReactGA from "react-ga";
 
 const foodForThought = [
   {
@@ -276,7 +277,13 @@ const Game = () => {
                     </AppButton>
                     <AppButton
                       className="w-full ml-3 p-2"
-                      onClick={() => router.push(routes.story.takePhoto)}
+                      onClick={() => {
+                        ReactGA.event({
+                          category: "User",
+                          action: "Clicked Contribute",
+                        });
+                        router.push(routes.story.takePhoto);
+                      }}
                     >
                       <div className="flex flex-col items-center">
                         <p>Contribute</p>
