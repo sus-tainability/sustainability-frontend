@@ -68,6 +68,12 @@ const Game = () => {
   const [progressSteps, setProgressSteps] = useState<Step[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.event({
+    category: "Game",
+    action: "Game page loaded",
+  });
+
   const [getCurrentEvent] = useApi(
     () => EventService.getCurrentEvents(),
     false,
