@@ -47,6 +47,7 @@ const App: React.FC = () => {
     hitType: "pageview",
     page: window.location.pathname + window.location.search,
   });
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
   window
     .matchMedia("(orientation: portrait)")
