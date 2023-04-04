@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 
 const InfoTile = ({
   imageUrl,
@@ -9,11 +10,20 @@ const InfoTile = ({
   link?: string;
   text: string;
 }) => {
+  const onClick = () => {
+    ReactGA.event({
+      category: "User",
+      action: "Clicked Info Tile",
+      label: text,
+    });
+  };
+
   return (
     <div className="relative h-36 w-36 rounded-lg mr-2">
       {link && (
         <a href={link}>
           <img
+            onClick={onClick}
             className="object-cover h-36 w-36 rounded-lg"
             src={imageUrl}
             alt=""
@@ -24,6 +34,7 @@ const InfoTile = ({
         <img
           className="object-cover h-36 w-36 rounded-lg"
           src={imageUrl}
+          onClick={onClick}
           alt=""
         />
       )}
