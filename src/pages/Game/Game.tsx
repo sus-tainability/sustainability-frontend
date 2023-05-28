@@ -60,6 +60,19 @@ const foodForThought = [
     link: "https://www.mandai.com/en/river-wonders/animals-and-zones/red-panda.html",
   },
 ];
+
+const OnboardingSteps = () => {
+  return (
+    <div
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #000000 100%)",
+      }}
+      className="absolute w-full h-screen z-20"
+    ></div>
+  );
+};
+
 const Game = () => {
   const router = useIonRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -238,6 +251,7 @@ const Game = () => {
       {isLoading && <LoadingPage />}
       {!isLoading && (
         <IonPage>
+          <OnboardingSteps />
           <IonHeader>
             <IonToolbar mode="ios">
               <IonTitle className="font-body">{event?.name}</IonTitle>
