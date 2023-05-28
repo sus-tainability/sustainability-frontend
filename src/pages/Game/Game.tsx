@@ -69,7 +69,18 @@ const OnboardingSteps = () => {
           "linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #000000 100%)",
       }}
       className="absolute w-full h-screen z-20"
-    ></div>
+    >
+      <div className="w-full absolute top-40">
+        <p className="font-header text-white text-2xl font-semibold text-center">
+          Let's get you started on
+          <br />
+          your recycling journey!
+        </p>
+        <div className="flex w-full justify-center mt-2">
+          <AppButton className="px-6 py-3">Continue</AppButton>
+        </div>
+      </div>
+    </div>
   );
 };
 
