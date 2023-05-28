@@ -28,6 +28,7 @@ import AttemptService from "@/api/Attempt/AttemptService";
 import { demoAtom } from "@/utils/atoms/demo";
 import { demoRoutes } from "@/constants/types";
 import { AssetData } from "@/api/Asset/AssetService";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const foodForThought = [
   {
@@ -62,22 +63,61 @@ const foodForThought = [
 ];
 
 const OnboardingSteps = () => {
+  const steps = [
+    "Let's get you started \n on your recyling journey!",
+    "The status bar shows you \n which stage the quest is at",
+    "Here you can find the  \n instructions to the current \n challenge",
+    "You may view your progress \n and efforts here!",
+    "Whenever you’re ready, you \n may submit a contribution \n here!",
+    "Every time your \n contribution is validated, it \n will add to this progress bar. \n Upon completion, the vote \n for the next challenge will \n begin!",
+    "Your adventure now begins, \n don’t forget to invite your \n friends!",
+  ];
+
+  const position = [10, 40, 70, 100, 130, 160, 190];
+
+  const [currentText, setCurrentText] = useState<string>(steps[0]);
+  const [currentPosition, setCurrentPosition] = useState<number>(position[0]);
+  const [isHidden, setIsHidden] = useLocalStorage("isHidden", false);
+
+  const getNextStep = () => {
+    const index = steps.indexOf(currentText);
+    if (index !== -1 && index < steps.length - 1) {
+      setCurrentText(steps[index + 1]);
+      setCurrentPosition(position[index + 1]);
+    }
+
+    if (index === steps.length - 1) {
+      setIsHidden(true);
+    }
+  };
+
   return (
     <div
       style={{
         background:
           "linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #000000 100%)",
+        display: isHidden ? "none" : "block",
       }}
       className="absolute w-full h-screen z-20"
     >
-      <div className="w-full absolute top-40">
-        <p className="font-header text-white text-2xl font-semibold text-center">
-          Let's get you started on
-          <br />
-          your recycling journey!
+      <div
+        style={{
+          top: `${currentPosition}px`,
+        }}
+        className={`w-full absolute`}
+      >
+        <p
+          style={{
+            whiteSpace: "pre-line",
+          }}
+          className="font-header text-white text-2xl font-semibold text-center"
+        >
+          {currentText}
         </p>
-        <div className="flex w-full justify-center mt-2">
-          <AppButton className="px-6 py-3">Continue</AppButton>
+        <div className="flex w-full justify-center mt-3">
+          <AppButton onClick={getNextStep} className="px-6 py-3">
+            Continue
+          </AppButton>
         </div>
       </div>
     </div>
