@@ -73,17 +73,15 @@ const OnboardingSteps = () => {
     "Your adventure now begins, \n don’t forget to invite your \n friends!",
   ];
 
-  const position = [10, 40, 70, 100, 130, 160, 190];
+  const position = ["40%", "120px", "70px", "100px", "130px", "160px", "190px"];
 
-  const [currentText, setCurrentText] = useState<string>(steps[0]);
-  const [currentPosition, setCurrentPosition] = useState<number>(position[0]);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [isHidden, setIsHidden] = useLocalStorage("isHidden", false);
 
   const getNextStep = () => {
-    const index = steps.indexOf(currentText);
+    const index = currentStep;
     if (index !== -1 && index < steps.length - 1) {
-      setCurrentText(steps[index + 1]);
-      setCurrentPosition(position[index + 1]);
+      setCurrentStep(index + 1);
     }
 
     if (index === steps.length - 1) {
@@ -102,7 +100,8 @@ const OnboardingSteps = () => {
     >
       <div
         style={{
-          top: `${currentPosition}px`,
+          top: `${position[currentStep]}`,
+          transform: "translateY(-50%)"
         }}
         className={`w-full absolute`}
       >
@@ -112,7 +111,7 @@ const OnboardingSteps = () => {
           }}
           className="font-header text-white text-2xl font-semibold text-center"
         >
-          {currentText}
+          {steps[currentStep]}
         </p>
         <div className="flex w-full justify-center mt-3">
           <AppButton onClick={getNextStep} className="px-6 py-3">
@@ -302,14 +301,14 @@ const Game = () => {
       {isLoading && <LoadingPage />}
       {!isLoading && (
         <IonPage>
-          <OnboardingSteps />
           <IonHeader>
             <IonToolbar mode="ios">
               <IonTitle className="font-body">{event?.name}</IonTitle>
             </IonToolbar>
           </IonHeader>
           <IonContent>
-            <div className=" h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
+            <OnboardingSteps />
+            <div className="h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
               <img className="w-full absolute top-0" src={gameImg} alt="test" />
               <ProgressTimeline steps={progressSteps} />
               <div
