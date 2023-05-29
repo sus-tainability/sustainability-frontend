@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {
   IonPage,
@@ -62,7 +62,13 @@ const foodForThought = [
   },
 ];
 
-const OnboardingSteps = () => {
+const OnboardingSteps = ({ statusBarRef, instructionsRef, effortRef, contributionRef, progressBarRef }: {
+  statusBarRef: React.RefObject<HTMLDivElement>,
+  instructionsRef: React.RefObject<HTMLDivElement>,
+  effortRef: React.RefObject<HTMLDivElement>,
+  contributionRef: React.RefObject<HTMLDivElement>,
+  progressBarRef: React.RefObject<HTMLDivElement>,
+}) => {
   const steps = [
     "Let's get you started \n on your recyling journey!",
     "The status bar shows you \n which stage the quest is at",
@@ -73,7 +79,7 @@ const OnboardingSteps = () => {
     "Your adventure now begins, \n don’t forget to invite your \n friends!",
   ];
 
-  const position = ["40%", "120px", "70px", "100px", "130px", "160px", "190px"];
+  const position = ["40%", "120px", "230px", "230px", "250px", "330px", "40%"];
 
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isHidden, setIsHidden] = useLocalStorage("isHidden", false);
@@ -88,6 +94,20 @@ const OnboardingSteps = () => {
       setIsHidden(true);
     }
   };
+
+  useEffect(() => {
+    if (statusBarRef.current !== null) statusBarRef.current.style.zIndex = "0";
+    if (instructionsRef.current !== null) instructionsRef.current.style.zIndex = "0";
+    if (effortRef.current !== null) effortRef.current.style.zIndex = "0";
+    if (contributionRef.current !== null) contributionRef.current.style.zIndex = "0";
+    if (progressBarRef.current !== null) progressBarRef.current.style.zIndex = "0";
+
+    if (currentStep === 1 && statusBarRef.current !== null) statusBarRef.current.style.zIndex = "30";
+    if (currentStep === 2 && instructionsRef.current !== null) instructionsRef.current.style.zIndex = "30";
+    if (currentStep === 3 && effortRef.current !== null) effortRef.current.style.zIndex = "30";
+    if (currentStep === 4 && contributionRef.current !== null) contributionRef.current.style.zIndex = "30";
+    if (currentStep === 5 && progressBarRef.current !== null) progressBarRef.current.style.zIndex = "30";
+  }, [currentStep]);
 
   return (
     <div
@@ -163,6 +183,12 @@ const Game = () => {
   const [story, setStory] = useState<StoryData>();
   const [assetData, setAssetData] = useState<AssetData[]>([]);
   const location = useLocation();
+
+  const statusBarRef = React.createRef<HTMLDivElement>();
+  const instructionsRef = React.createRef<HTMLDivElement>();
+  const effortRef = React.createRef<HTMLDivElement>();
+  const contributionRef = React.createRef<HTMLDivElement>();
+  const progressBarRef = React.createRef<HTMLDivElement>();
 
   useEffect(() => {
     const pathName = location.pathname;
@@ -307,16 +333,22 @@ const Game = () => {
             </IonToolbar>
           </IonHeader>
           <IonContent>
-            <OnboardingSteps />
+            <OnboardingSteps 
+              statusBarRef={statusBarRef}  
+              instructionsRef={instructionsRef}
+              effortRef={effortRef}
+              contributionRef={contributionRef}
+              progressBarRef={progressBarRef}
+            />
             <div className="h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
               <img className="w-full absolute top-0" src={gameImg} alt="test" />
-              <ProgressTimeline steps={progressSteps} />
+              <ProgressTimeline innerRef={statusBarRef} steps={progressSteps} />
               <div
-                className="bg-[#d9d9d91a] rounded-t-3xl  backdrop-blur mt-[35vh]"
+                className="bg-[#d9d9d91a] rounded-t-3xl backdrop-blur mt-[35vh]"
                 style={{ WebkitBackdropFilter: "blur(8px)" }}
               >
                 <div className="p-8 min-h-[100%]">
-                  <div className="flex justify-between text-[#312E3E] font-medium">
+                  <div ref={effortRef} className="flex justify-between text-[#312E3E] font-medium">
                     <a href="/profile" className="underline-offset-2 underline">
                       My Impact
                     </a>
