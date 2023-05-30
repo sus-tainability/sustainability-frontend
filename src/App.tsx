@@ -33,6 +33,8 @@ import "./theme/tailwind.css";
 import Toaster from "./components/Toaster";
 import DialogCard from "./components/DialogCard";
 
+import ReactGA from "react-ga";
+
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -40,6 +42,12 @@ const App: React.FC = () => {
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
   const [showSwapOrientation, setShowSwapOrientation] = useState(!isPortrait);
   const queryClient = new QueryClient();
+
+  ReactGA.send({
+    hitType: "pageview",
+    page: window.location.pathname + window.location.search,
+  });
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
   window
     .matchMedia("(orientation: portrait)")

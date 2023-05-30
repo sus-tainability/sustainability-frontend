@@ -29,6 +29,7 @@ import { useRecoilState } from "recoil";
 import { userAtom } from "@/utils/atoms/user/atom";
 import { ellipsisHorizontal } from "ionicons/icons";
 import AppButton from "@/components/AppButton/AppButton";
+import ReactGA from "react-ga";
 
 const Profile: React.FC = () => {
   const [user, setUser] = useRecoilState(userAtom);
@@ -36,6 +37,11 @@ const Profile: React.FC = () => {
   const [getSelf] = useApi(() => UserService.getSelf(), false, false, false);
 
   const { execute, value, status } = useAsync(getSelf, false);
+  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.event({
+    category: "User",
+    action: "Viewed Profile",
+  });
 
   useEffect(() => {
     execute();

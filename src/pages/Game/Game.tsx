@@ -28,7 +28,7 @@ import AttemptService from "@/api/Attempt/AttemptService";
 import { demoAtom } from "@/utils/atoms/demo";
 import { demoRoutes } from "@/constants/types";
 import { AssetData } from "@/api/Asset/AssetService";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import ReactGA from "react-ga";
 
 const foodForThought = [
   {
@@ -68,6 +68,12 @@ const Game = () => {
   const [_, setDialogState] = useRecoilState(dialogAtom);
   const [progressSteps, setProgressSteps] = useState<Step[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.event({
+    category: "Game",
+    action: "Game page loaded",
+  });
 
   const [getCurrentEvent] = useApi(
     () => EventService.getCurrentEvents(),
@@ -278,7 +284,13 @@ const Game = () => {
                     </AppButton>
                     <AppButton
                       className="w-full ml-3 p-2"
-                      onClick={() => router.push(routes.story.takePhoto)}
+                      onClick={() => {
+                        ReactGA.event({
+                          category: "User",
+                          action: "Clicked Contribute",
+                        });
+                        router.push(routes.story.takePhoto);
+                      }}
                     >
                       <div className="flex flex-col items-center">
                         <p>Contribute</p>
