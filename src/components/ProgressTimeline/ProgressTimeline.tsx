@@ -15,9 +15,9 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ProgressTimeline = ({ steps, innerRef }: { steps: Step[], innerRef?: React.RefObject<HTMLDivElement> }) => {
+const ProgressTimeline = ({ steps }: { steps: Step[] }) => {
   return (
-    <div ref={innerRef} className="flex flex-col items-center mx-4 mt-4 relative">
+    <div className="flex flex-col items-center mx-4 mt-4 relative">
       <nav aria-label="Progress">
         <ol role="list" className="flex items-center">
           {steps.map((step, stepIdx) => (

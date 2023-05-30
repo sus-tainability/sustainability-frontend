@@ -22,6 +22,7 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 
 import Home from "@pages/Landing/Home";
+import Onboarding from "@/pages/Onboarding";
 import Login from "@pages/Landing/Login";
 import Profile from "@pages/Profile/Profile";
 import Game from "@/pages/Story";
@@ -79,6 +80,11 @@ const BaseRouter = () => {
             <IonRouterOutlet animated={true} mode="ios">
               <Route exact path={routes.story.base} component={Home} />
               <Route exact path={routes.profile.base} component={Profile} />
+              <Route
+                exact
+                path={routes.story.onboarding}
+                component={Onboarding}
+              />
               <Route exact path={routes.story.mockGame} component={Game} />
               <Route exact path={routes.story.mockVote} component={Game} />
               <Route exact path={routes.story.game} component={Game} />

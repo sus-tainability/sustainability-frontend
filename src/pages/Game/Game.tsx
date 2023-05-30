@@ -62,87 +62,6 @@ const foodForThought = [
   },
 ];
 
-const OnboardingSteps = ({ statusBarRef, instructionsRef, effortRef, contributionRef, progressBarRef }: {
-  statusBarRef: React.RefObject<HTMLDivElement>,
-  instructionsRef: React.RefObject<HTMLDivElement>,
-  effortRef: React.RefObject<HTMLDivElement>,
-  contributionRef: React.RefObject<HTMLDivElement>,
-  progressBarRef: React.RefObject<HTMLDivElement>,
-}) => {
-  const steps = [
-    "Let's get you started \n on your recyling journey!",
-    "The status bar shows you \n which stage the quest is at",
-    "Here you can find the  \n instructions to the current \n challenge",
-    "You may view your progress \n and efforts here!",
-    "Whenever you’re ready, you \n may submit a contribution \n here!",
-    "Every time your \n contribution is validated, it \n will add to this progress bar. \n Upon completion, the vote \n for the next challenge will \n begin!",
-    "Your adventure now begins, \n don’t forget to invite your \n friends!",
-  ];
-
-  const position = ["40%", "120px", "230px", "230px", "250px", "330px", "40%"];
-
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [isHidden, setIsHidden] = useLocalStorage("isHidden", false);
-
-  const getNextStep = () => {
-    const index = currentStep;
-    if (index !== -1 && index < steps.length - 1) {
-      setCurrentStep(index + 1);
-    }
-
-    if (index === steps.length - 1) {
-      setIsHidden(true);
-    }
-  };
-
-  useEffect(() => {
-    if (statusBarRef.current !== null) statusBarRef.current.style.zIndex = "0";
-    if (instructionsRef.current !== null) instructionsRef.current.style.zIndex = "0";
-    if (effortRef.current !== null) effortRef.current.style.zIndex = "0";
-    if (contributionRef.current !== null) contributionRef.current.style.zIndex = "0";
-    if (progressBarRef.current !== null) progressBarRef.current.style.zIndex = "0";
-
-    if (currentStep === 1 && statusBarRef.current !== null) statusBarRef.current.style.zIndex = "30";
-    if (currentStep === 2 && instructionsRef.current !== null) instructionsRef.current.style.zIndex = "30";
-    if (currentStep === 3 && effortRef.current !== null) effortRef.current.style.zIndex = "30";
-    if (currentStep === 4 && contributionRef.current !== null) contributionRef.current.style.zIndex = "30";
-    if (currentStep === 5 && progressBarRef.current !== null) progressBarRef.current.style.zIndex = "30";
-  }, [currentStep]);
-
-  return (
-    <div
-      style={{
-        background:
-          "linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #000000 100%)",
-        display: isHidden ? "none" : "block",
-      }}
-      className="absolute w-full h-screen z-20"
-    >
-      <div
-        style={{
-          top: `${position[currentStep]}`,
-          transform: "translateY(-50%)"
-        }}
-        className={`w-full absolute`}
-      >
-        <p
-          style={{
-            whiteSpace: "pre-line",
-          }}
-          className="font-header text-white text-2xl font-semibold text-center"
-        >
-          {steps[currentStep]}
-        </p>
-        <div className="flex w-full justify-center mt-3">
-          <AppButton onClick={getNextStep} className="px-6 py-3">
-            Continue
-          </AppButton>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const Game = () => {
   const router = useIonRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -183,12 +102,6 @@ const Game = () => {
   const [story, setStory] = useState<StoryData>();
   const [assetData, setAssetData] = useState<AssetData[]>([]);
   const location = useLocation();
-
-  const statusBarRef = React.createRef<HTMLDivElement>();
-  const instructionsRef = React.createRef<HTMLDivElement>();
-  const effortRef = React.createRef<HTMLDivElement>();
-  const contributionRef = React.createRef<HTMLDivElement>();
-  const progressBarRef = React.createRef<HTMLDivElement>();
 
   useEffect(() => {
     const pathName = location.pathname;
@@ -333,22 +246,15 @@ const Game = () => {
             </IonToolbar>
           </IonHeader>
           <IonContent>
-            <OnboardingSteps 
-              statusBarRef={statusBarRef}  
-              instructionsRef={instructionsRef}
-              effortRef={effortRef}
-              contributionRef={contributionRef}
-              progressBarRef={progressBarRef}
-            />
             <div className="h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
               <img className="w-full absolute top-0" src={gameImg} alt="test" />
-              <ProgressTimeline innerRef={statusBarRef} steps={progressSteps} />
+              <ProgressTimeline steps={progressSteps} />
               <div
                 className="bg-[#d9d9d91a] rounded-t-3xl backdrop-blur mt-[35vh]"
                 style={{ WebkitBackdropFilter: "blur(8px)" }}
               >
                 <div className="p-8 min-h-[100%]">
-                  <div ref={effortRef} className="flex justify-between text-[#312E3E] font-medium">
+                  <div className="flex justify-between text-[#312E3E] font-medium">
                     <a href="/profile" className="underline-offset-2 underline">
                       My Impact
                     </a>

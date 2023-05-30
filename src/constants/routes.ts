@@ -5,6 +5,7 @@ export const routes = {
   story: {
     base: "/story",
     game: "/story/game",
+    onboarding: "/story/onboarding",
     mockGame: "/story/game/:id",
     mockVote: "/story/vote/:id1/:id2",
     takePhoto: "/story/takephoto",
