@@ -72,6 +72,7 @@ const Game = () => {
   useEffect(() => {
     const showOnboarding = localStorage.getItem("showOnboarding");
     if (showOnboarding == null) {
+      router.push(routes.story.onboarding, "forward", "replace");
       localStorage.setItem("showOnboarding", "true");
     }
 
