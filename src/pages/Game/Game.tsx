@@ -26,7 +26,6 @@ import { dialogAtom } from "@/utils/atoms/dialog";
 import { useRecoilState } from "recoil";
 import AttemptService from "@/api/Attempt/AttemptService";
 import { demoAtom } from "@/utils/atoms/demo";
-import { demoRoutes } from "@/constants/types";
 import { AssetData } from "@/api/Asset/AssetService";
 import ReactGA from "react-ga";
 
@@ -168,15 +167,6 @@ const Game = () => {
       }
       setIsLoading(false);
     }
-  };
-
-  const redirectToVote = () => {
-    if (!event) return;
-    const url = demoRoutes.get(event.id.toString()) || "";
-    if (url === "/story") {
-      setDemo((prev) => ({ ...prev, history: [] }));
-    }
-    router.push(url);
   };
 
   useEffect(() => {
@@ -392,24 +382,6 @@ const Game = () => {
                         />
                       ))}
                     </div>
-                  </div>
-                  <div>
-                    {event && (
-                      <button
-                        type="submit"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          redirectToVote();
-                        }}
-                        className="flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-lg font-semibold text-black shadow-sm bg-white bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 mt-5"
-                      >
-                        {demoRoutes.get(event.id.toString()) === "/story"
-                          ? "Restart"
-                          : "Try out the next event!"}
-
-                        <span className="text-red-400 ml-1">(Demo)</span>
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>

@@ -13,7 +13,6 @@ import {
 import homeImg from "@/assets/homeImg.png";
 import AppButton from "@/components/AppButton";
 import InformationFooter from "@/components/InformationFooter";
-import { routes } from "@/constants/routes";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { demoAtom } from "@/utils/atoms/demo";
 import { useRecoilState } from "recoil";
@@ -103,13 +102,7 @@ const Home: React.FC = () => {
               <AppButton
                 onClick={() => {
                   setHasJoined(true);
-                  const base = `${routes.story.base}`;
-                  const history = demo.history.filter((x) => x !== "/story");
-                  const nextUrl =
-                    history.length === 0
-                      ? `${base}/vote/2/3`
-                      : history[history.length - 1];
-                  router.push(nextUrl, "forward", "replace");
+                  router.push("/story/game/2", "forward", "replace");
                 }}
                 className="py-4 px-10 mt-8"
               >
