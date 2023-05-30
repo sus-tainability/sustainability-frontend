@@ -33,7 +33,9 @@ const Onboarding = () => {
       setCurrentStep(currentStep + 1);
     }
     if (currentStep === steps.length - 1) {
-      router.push("/story/game/2");
+      localStorage.setItem("showOnboarding", "false");
+      const nextId = localStorage.getItem("nextId") || 2;
+      router.push("/story/game/" + nextId);
     }
   };
 

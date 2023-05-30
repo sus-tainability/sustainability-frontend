@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   IonPage,
@@ -68,6 +68,17 @@ const Game = () => {
   const [_, setDialogState] = useRecoilState(dialogAtom);
   const [progressSteps, setProgressSteps] = useState<Step[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const showOnboarding = localStorage.getItem("showOnboarding");
+    if (showOnboarding == null) {
+      localStorage.setItem("showOnboarding", "true");
+    }
+
+    if (showOnboarding === "true") {
+      router.push(routes.story.onboarding, "forward", "replace");
+    }
+  }, [router]);
 
   ReactGA.pageview(window.location.pathname + window.location.search);
   ReactGA.event({
@@ -228,6 +239,7 @@ const Game = () => {
     if (!story || !event) return;
     const id = event.id;
     const partOfArr = story.partOf;
+    partOfArr.sort((a, b) => a.eventOneId - b.eventOneId);
     const steps: Step[] = partOfArr.map((part) => {
       const isCurrent = part.eventOneId === id || part.eventTwoId === id;
       const icon = isCurrent ? "checkmark-circle" : "checkmark-circle-outline";

@@ -48,6 +48,10 @@ const Vote = () => {
     false
   );
 
+  useEffect(() => {
+    localStorage.setItem("nextId", (nextId || 2).toString());
+  }, [nextId]);
+
   function durationAsString(start: Moment, end: Moment) {
     const duration = moment.duration(end.diff(start));
 
