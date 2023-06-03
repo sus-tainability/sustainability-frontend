@@ -67,7 +67,7 @@ const Onboarding = () => {
     <div className="w-full h-screen overflow-auto relative">
       <img
         src={images[currentStep]}
-        className="w-full mb-10"
+        className="w-full mb-20"
         alt="onboarding"
       />
       <div
