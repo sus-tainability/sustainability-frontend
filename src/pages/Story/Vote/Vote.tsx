@@ -21,7 +21,6 @@ import EventService from "@/api/Event/EventService";
 import { demoAtom } from "@/utils/atoms/demo";
 import { useRecoilState } from "recoil";
 
-import voteImg from "@/assets/voteImg.png";
 import { routes } from "@/constants/routes";
 
 const Vote = () => {
@@ -131,7 +130,10 @@ const Vote = () => {
           </IonHeader>
           <IonContent>
             <div className="h-full bg-gradient-to-b from-[#070300] to-[#3A1D0B]">
-              <img className="w-full absolute top-0" src={voteImg} />
+              <img
+                className="w-full absolute top-0"
+                src={currentEvents.voteImgUrl}
+              />
               <InformationFooter>
                 <div className="p-8">
                   <p className="text-lightShade text-4xl font-header font-bold">

@@ -14,6 +14,7 @@ export type PartOfWithEvents = {
   storyId: number;
   name: string;
   description: string;
+  voteImgUrl: string;
   startDate: string;
   createdAt: string;
   updatedAt: string;
