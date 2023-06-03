@@ -271,7 +271,7 @@ const Game = () => {
                       onClick={onClickContribute}
                       className="underline-offset-2 underline " // align this link to the right
                     >
-                      Event Information
+                      How to submit an image?
                     </p>
                   </div>
                   <div className="flex justify-between mt-4 text-base">
@@ -296,7 +296,7 @@ const Game = () => {
                       }}
                     >
                       <div className="flex flex-col items-center">
-                        <p>Contribute</p>
+                        <p>Submit an Image</p>
                         <CameraIcon className="h-12 w-12 mt-1" />
                       </div>
                     </AppButton>
