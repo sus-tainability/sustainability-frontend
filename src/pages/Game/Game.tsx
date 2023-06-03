@@ -11,7 +11,6 @@ import {
 import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 
-import gameImg from "@/assets/game/gameImg.png";
 import AppButton from "@/components/AppButton";
 import ProgressTimeline, { Step } from "@/components/ProgressTimeline";
 import ProgressBar from "@/components/ProgressBar";
@@ -256,7 +255,11 @@ const Game = () => {
           </IonHeader>
           <IonContent>
             <div className="h-fit min-h-full bg-gradient-to-b from-[#9d6552] to-[#9d654d] text-[#312E3E] w-[100%]">
-              <img className="w-full absolute top-0" src={gameImg} alt="test" />
+              <img
+                className="w-full absolute top-0"
+                src={event?.challegeImgUrl}
+                alt="test"
+              />
               <ProgressTimeline steps={progressSteps} />
               <div
                 className="bg-[#d9d9d91a] rounded-t-3xl backdrop-blur mt-[35vh]"

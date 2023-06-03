@@ -11,6 +11,7 @@ export type EventData = {
   reward: number;
   requiredAssets: number;
   imageUrl: string;
+  challegeImgUrl: string;
   activeParticipants: number;
   createdAt: string;
   updatedAt: string;
@@ -31,6 +32,8 @@ export default class EventService {
         },
         true
       );
+      console.log(response);
+
       return response;
     } catch (error) {
       return Promise.reject(error);
