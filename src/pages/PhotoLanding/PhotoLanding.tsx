@@ -41,18 +41,14 @@ export const PhotoLanding: React.FC = () => {
                 className="bg-white rounded-xl flex justify-between items-center px-5 py-4"
                 onClick={() => setIsOpen(true)}
               >
-                <IonText className="font-bold font-body">
-                  Your
-                  <br /> submission
-                </IonText>
+                <IonText className="font-bold font-body">Your Image</IonText>
                 <PhotoPlaceholder />
               </div>
 
               <IonText className="font-body text-lightShade text-[16px]">
-                Before submitting your challenge attempt, please help us verify
-                your peers’ submissions! complete a simple community
-                verification. This is ensures that your peers do the right
-                thing!
+                Before submitting your image for the challenge, please help us
+                keep our AI (and your peers! 😉) honest by verifying someone
+                else's image on the next screen. Thank you!
               </IonText>
 
               <div className="grid grid-cols-2 grid-rows-1 gap-4">
