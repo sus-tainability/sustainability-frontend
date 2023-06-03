@@ -32,32 +32,24 @@ import ReactGA from "react-ga";
 const foodForThought = [
   {
     id: 1,
-    text: "Red Panda | Species | WWF",
-    imageUrl:
-      "https://files.worldwildlife.org/wwfcmsprod/images/HERO_Red_Panda_279141/hero_full/7bkg4jrmln_XL_279141.jpg",
-    link: "https://www.worldwildlife.org/species/red-panda",
+    text: "Red Panda: The Enigmatic and Adorable Bamboo Eater",
+    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8Pdjt-P2QiYhyqA-pRbCvDKEIHsXGEhKLGw&usqp=CAU",
+    link: "https://kids.nationalgeographic.com/animals/mammals/facts/red-panda",
   },
 
   {
     id: 2,
-    text: "10 of the most endangered animals",
+    text: "Unveiling the Secrets of Red Pandas",
     imageUrl:
-      "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2017-12/Javan_rhino_Ujung_Kulon_NP.jpg?h=3e43625b&itok=KBk1EvwZ",
-    link: "https://www.wwf.org.uk/learn/wildlife/endangered-animals",
+      "https://blogs.scientificamerican.com/sciam/assets/Image/16339195416_71a2607816_k.jpg",
+    link: "https://blogs.scientificamerican.com/thoughtful-animal/7-things-you-didne28099t-know-about-red-pandas/",
   },
   {
     id: 3,
-    text: "Top 5 Red Panda Facts",
+    text: "Red Pandas:",
     imageUrl:
-      "https://www.wwf.org.uk/sites/default/files/styles/gallery_image/public/2022-04/_WW187246.jpg?h=485d8330&itok=50jJdB4O",
-    link: "https://www.wwf.org.uk/learn/fascinating-facts/red-panda",
-  },
-  {
-    id: 4,
-    text: "Red Panda - River Wonders",
-    imageUrl:
-      "https://www.mandai.com/content/dam/wrs/river-safari/animals/red-panda/the-panda-connection.jpg.transform/compress/resize1000/img.jpg",
-    link: "https://www.mandai.com/en/river-wonders/animals-and-zones/red-panda.html",
+      "https://u4d2z7k9.rocketcdn.me/wp-content/uploads/2022/08/Untitled-1024-%C3%97-683px-98.jpg",
+    link: "https://earth.org/endangered-species/red-pandas/",
   },
 ];
 

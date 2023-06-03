@@ -19,12 +19,12 @@ const InfoTile = ({
   };
 
   return (
-    <div className="relative h-36 w-36 rounded-lg mr-2">
+    <div className="flex flex-col items-center gap-2 h-fit w-56 rounded-lg mr-2">
       {link && (
         <a href={link}>
           <img
             onClick={onClick}
-            className="object-cover h-36 w-36 rounded-lg"
+            className="object-cover h-36 w-100 rounded-lg"
             src={imageUrl}
             alt=""
           />
@@ -32,15 +32,13 @@ const InfoTile = ({
       )}
       {!link && (
         <img
-          className="object-cover h-36 w-36 rounded-lg"
+          className="object-cover h-36 w-100 rounded-lg"
           src={imageUrl}
           onClick={onClick}
           alt=""
         />
       )}
-      <div className="bg-[#ffffffcd] absolute bottom-0 z-30 py-2 rounded-lg font-body font-bold w-full">
-        <p className="text-center w-full">{text}</p>
-      </div>
+      <div className="font-body font-white w-full line-clamp-2">{text}</div>
     </div>
   );
 };
