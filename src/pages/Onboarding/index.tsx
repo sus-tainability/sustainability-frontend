@@ -9,11 +9,6 @@ import img4 from "../../assets/onboarding/4.png";
 import img5 from "../../assets/onboarding/5.png";
 import img6 from "../../assets/onboarding/6.png";
 import img7 from "../../assets/onboarding/7.png";
-import img8 from "../../assets/onboarding/8.png";
-import img10 from "../../assets/onboarding/10.png";
-import img11 from "../../assets/onboarding/11.png";
-import img12 from "../../assets/onboarding/12.png";
-import img13 from "../../assets/onboarding/13.png";
 
 const Onboarding = () => {
   const router = useIonRouter();
@@ -26,28 +21,10 @@ const Onboarding = () => {
     "Whenever you’re ready, you \n may submit a image \n here!",
     "Every validated image \n advances your challenge's \n progress bar. Once the \n challenge has been \n completed, your group can \n vote on the next \n challege to attempt!",
     "Your adventure now begins. \n Don’t forget to invite your \n friends!",
-    "Submit your\nfirst image now!",
-    "You can view the image you\nare about to submit",
-    "Help verify if the image\nmatches the description",
-    "You may help validate using\nthe buttons below",
-    "Once the challenge goal is\nmet, the community will\nvote for the next challenge",
   ];
-  const images = [
-    img1,
-    img2,
-    img3,
-    img4,
-    img5,
-    img6,
-    img7,
-    img8,
-    img10,
-    img11,
-    img12,
-    img13,
-  ];
+  const images = [img1, img2, img3, img4, img5, img6, img7];
 
-  const height = [300, 130, 550, 550, 690, 350, 690, 690, 400, 670, 590, 490];
+  const height = [300, 130, 550, 550, 690, 350, 690];
 
   const [currentStep, setCurrentStep] = useState(0);
 
