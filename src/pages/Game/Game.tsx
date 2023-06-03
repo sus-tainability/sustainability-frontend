@@ -215,11 +215,11 @@ const Game = () => {
   const onClickContribute = () => {
     setDialogState({
       isShown: true,
-      title: event?.name || "",
-      message: event?.description || "",
+      title: story?.name || "",
+      message: story?.description || "",
       footer: [
-        "Contribute Your Own Photos",
-        "Validate Community Photos",
+        event?.personalContributionHowTo || "Contribute Your Own Photos",
+        event?.communityContributionHowTo || "Validate Community Photos",
         `${event?.reward?.toString() || "0"} Credits`,
       ],
     });

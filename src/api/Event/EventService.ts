@@ -12,6 +12,8 @@ export type EventData = {
   requiredAssets: number;
   imageUrl: string;
   activeParticipants: number;
+  personalContributionHowTo: string;
+  communityContributionHowTo: string;
   createdAt: string;
   updatedAt: string;
   attempt: AttemptData;

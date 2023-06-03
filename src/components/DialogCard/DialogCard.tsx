@@ -11,7 +11,7 @@ import infoIcon from "@/assets/game/infoIcon.svg";
 const DialogCard = () => {
   const [dialogState, setDialogState] = useRecoilState(dialogAtom);
 
-  const icons = [creditsIcon, peopleIcon, infoIcon];
+  const icons = [infoIcon, peopleIcon, creditsIcon];
 
   const setClose = () => {
     setDialogState((prev) => ({ ...prev, isShown: false }));
@@ -43,7 +43,7 @@ const DialogCard = () => {
                   </button>
                 </div>
                 <div className="sm:flex sm:items-start">
-                  <div className="flex h-12 flex-shrink-0 items-start justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                  <div className="flex h-fit flex-shrink-0 items-start justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10">
                     <Dialog.Title
                       as="h3"
                       className="text-left text-2xl w-full font-semibold"
