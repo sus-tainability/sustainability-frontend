@@ -11,7 +11,7 @@ import {
 import { ShareIcon, CameraIcon } from "@heroicons/react/20/solid";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 
-import gameImg from "@/assets/game/challege panda.png";
+import gameImg from "@/assets/game/gameImg.png";
 import AppButton from "@/components/AppButton";
 import ProgressTimeline, { Step } from "@/components/ProgressTimeline";
 import ProgressBar from "@/components/ProgressBar";
