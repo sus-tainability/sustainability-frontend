@@ -45,7 +45,7 @@ const foodForThought = [
   },
   {
     id: 3,
-    text: "Red Pandas:",
+    text: "Red Pandas: Endangered Animals Spotlight",
     imageUrl:
       "https://u4d2z7k9.rocketcdn.me/wp-content/uploads/2022/08/Untitled-1024-%C3%97-683px-98.jpg",
     link: "https://earth.org/endangered-species/red-pandas/",
